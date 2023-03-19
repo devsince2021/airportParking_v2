@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsNumber, IsString } from 'class-validator';
 
 enum DB_TYPE {
   Mysql = 'mysql',
@@ -22,4 +22,7 @@ export class DataBaseConfig {
 
   @IsString()
   DB_DATABASE: string;
+
+  @IsBoolean()
+  DB_SYNC: boolean;
 }
