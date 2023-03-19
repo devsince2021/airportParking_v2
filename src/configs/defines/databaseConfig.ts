@@ -12,14 +12,14 @@ export class DataBaseConfig {
   DB_TYPE: DB_TYPE;
 
   @IsString()
-  HOST: string;
+  DB_HOST: string;
 
   @IsString()
-  USERNAME: string;
+  DB_USERNAME: string;
 
   @IsNumber()
-  PASSWORD: number;
+  DB_PASSWORD: number;
 
   @IsString()
-  DATABASE: string;
+  DB_DATABASE: string;
 }
