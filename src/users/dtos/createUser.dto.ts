@@ -1,21 +1,32 @@
-import { IsString, IsInt, IsEmail, IsNotEmpty } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, IsEnum } from 'class-validator';
+import { SignInTypes } from '../entities/user.entity';
 
 export interface ICreateUserDto {
   email: string;
   password: string;
   name: string;
+  phone: string;
+  signInType: SignInTypes;
 }
 
 export class CreateUserDto implements ICreateUserDto {
   @IsNotEmpty()
   @IsEmail()
-  public email: string;
+  email: string;
 
   @IsNotEmpty()
   @IsString()
-  public password: string;
+  password: string;
 
   @IsNotEmpty()
   @IsString()
-  public name: string;
+  name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  phone: string;
+
+  @IsNotEmpty()
+  @IsEnum(SignInTypes)
+  signInType: SignInTypes;
 }

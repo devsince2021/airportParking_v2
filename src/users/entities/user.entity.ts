@@ -1,5 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { IsString, IsInt, IsEmail, IsNotEmpty } from 'class-validator';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 export enum SignInTypes {
   Email = 'EM',
@@ -15,6 +14,7 @@ export enum UserRole {
 }
 
 @Entity('user')
+@Unique(['phone'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
