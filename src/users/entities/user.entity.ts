@@ -40,6 +40,12 @@ export class User {
   })
   role: UserRole;
 
+  @Column()
+  email: string;
+
+  @Column()
+  password: string;
+
   //@ManyToOne()
   //Company: Company
 }
