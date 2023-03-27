@@ -9,13 +9,13 @@ export interface ICreateUserDto {
 export class CreateUserDto implements ICreateUserDto {
   @IsNotEmpty()
   @IsEmail()
-  email: string;
+  public email: string;
 
   @IsNotEmpty()
   @IsString()
-  password: string;
+  public password: string;
 
   @IsNotEmpty()
   @IsString()
-  name: string;
+  public name: string;
 }

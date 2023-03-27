@@ -1,11 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IsString, IsInt, IsEmail, IsNotEmpty } from 'class-validator';
 
-enum SignInTypes {
-  Eamil = 'EM',
+export enum SignInTypes {
+  Email = 'EM',
   Kakao = 'KA',
 }
 
-enum UserRole {
+export enum UserRole {
   Founder = 'F',
   CoFounder = 'C',
   GeneralManager = 'G',
@@ -22,7 +23,7 @@ export class User {
     type: 'enum',
     enum: SignInTypes,
   })
-  signInType: string;
+  signInType: SignInTypes;
 
   @Column({ default: true })
   isActive: boolean;
