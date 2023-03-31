@@ -1,3 +1,19 @@
-Auth Server
+# AirportParking - Auth Server
 
-## 프로젝트의 Auth 관련 로직을 핸들링할 서버 코드 입니다.
+회사별 주차예약 관리 서버를 작성 중에 있습니다. <br />
+기존 운영 중인 서버를 고도화 하고 있습니다. <br />
+https://github.com/devsince2021/airportParking-server.git
+
+## feature ( 진행 중 )
+[] 회원 가입 프로세스 제공 (전화번호 인증, 카카오 oauth) <br />
+[] 유저별로 다른 권한을 부여하고, 마스터 유저가 일반 유저에게 권한 부여/삭제를 할 수 있다. <br />
+
+[] 회사별로 다른 포맷의 예약 문서를 업로드 할 수 있다. <br />
+[] 회사별로 서비스 이용을 제한할 수 있다. <br />
+
+
+## stack
+1. typescript / nestjs
+2. typeORM / mysql
+3. jest / supertest
+4. aws ec2 / pm2
