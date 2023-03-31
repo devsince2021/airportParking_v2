@@ -3,9 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { validateConfig, AppConfig, DataBaseConfig } from './configs';
-
-import { UsersModule } from './users/users.module';
-import { UsersController } from './users/controllers/users.controller';
+import { UsersModule, User } from './users';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,12 +23,14 @@ import { UsersController } from './users/controllers/users.controller';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [],
+          entities: [User],
+          synchronize: configService.get('DB_SYNC'),
         };
       },
     }),
     UsersModule,
+    AuthModule,
   ],
-  controllers: [UsersController],
+  controllers: [],
 })
 export class AppModule {}
