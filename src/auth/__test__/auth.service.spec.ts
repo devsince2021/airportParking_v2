@@ -1,16 +1,31 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getModelToken } from '@nestjs/mongoose';
+
 import { AuthService } from '../auth.service';
+import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
+import { PhoneVerification } from '../entities/phoneVerification';
+
 import { mockSendVerifyCodeReqDto } from './mocks/auth.sendVerifyCodeDto';
+import { mockPhoneVerificationDocument } from './mocks/auth.entity';
 
 describe('AuthService', () => {
   let service: AuthService;
+  let repo: PhoneVerificationRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService],
+      providers: [
+        AuthService,
+        PhoneVerificationRepository,
+        {
+          provide: getModelToken(PhoneVerification.name),
+          useClass: PhoneVerification,
+        },
+      ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
+    repo = module.get<PhoneVerificationRepository>(PhoneVerificationRepository);
   });
 
   it('should be defined', () => {
@@ -23,6 +38,11 @@ describe('AuthService', () => {
 
       beforeEach(async () => {
         jest.spyOn(service, 'createCode').mockReturnValue('1234');
+
+        jest
+          .spyOn(repo, 'upsert')
+          .mockResolvedValue(mockPhoneVerificationDocument());
+
         response = await service.sendVerifyCode(
           mockSendVerifyCodeReqDto().phone,
         );
