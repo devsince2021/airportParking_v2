@@ -8,7 +8,7 @@ import {
 export const mockVerificationRecord = (): PhoneVerificationRecord => {
   return {
     phone: '01097182118',
-    code: '1234',
+    code: '0000',
   };
 };
 

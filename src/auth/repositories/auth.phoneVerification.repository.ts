@@ -17,9 +17,7 @@ export class PhoneVerificationRepository {
   ) {}
 
   async upsert(dto: PhoneVerificationRecord) {
-    const record = await this.PhoneVerificationModel.findOne({
-      phone: dto.phone,
-    });
+    const record = await this.findOne(dto);
 
     if (!_.isNil(record)) {
       return this.update(record, dto);
@@ -28,13 +26,20 @@ export class PhoneVerificationRepository {
     return this.insert(dto);
   }
 
-  async insert(dto: PhoneVerificationRecord) {
-    const record = new this.PhoneVerificationModel(dto);
-    await record.save();
+  async findOne(dto: PhoneVerificationRecord) {
+    const record = await this.PhoneVerificationModel.findOne({
+      phone: dto.phone,
+    });
 
     return record;
   }
 
+  async insert(dto: PhoneVerificationRecord) {
+    const record = await this.PhoneVerificationModel.create(dto);
+    return record;
+  }
+
+  // todo: 'set' 과 'save' 목킹 방법 찾아서 test 쓰기
   async update(
     record: PhoneVerificationDocument,
     dto: PhoneVerificationRecord,

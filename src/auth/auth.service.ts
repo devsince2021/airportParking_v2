@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { PhoneVerificationRepository } from './repositories/auth.phoneVerification.repository';
+import { PhoneVerificationRecord } from './dtos/auth.sendVerifyCodeDto';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
   ) {}
 
   async sendVerifyCode(phone: string) {
-    const dto = {
+    const dto: PhoneVerificationRecord = {
       phone,
       code: this.createCode(),
     };
