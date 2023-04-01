@@ -1,8 +1,9 @@
+export interface PhoneVerificationRecord {
+  phone: string;
+  code: string;
+}
 export interface SendVerifyCodeReqDto {
   phone: string;
 }
 
-export interface SendVerifyCodeResDto {
-  phone: string;
-  code: string;
-}
+export type SendVerifyCodeResDto = PhoneVerificationRecord;
