@@ -2,7 +2,7 @@ import {
   SendVerifyCodeReqDto,
   SendVerifyCodeResDto,
   PhoneVerificationRecord,
-} from '../../dtos/auth.sendVerfyCodeDto';
+} from '../../dtos/auth.sendVerifyCodeDto';
 
 // service
 export const mockVerificationRecord = (): PhoneVerificationRecord => {

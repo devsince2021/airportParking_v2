@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SendVerifyCodeReqDto } from './dtos/auth.sendVerfyCodeDto';
+import { SendVerifyCodeReqDto } from './dtos/auth.sendVerifyCodeDto';
 
 @Controller('auth')
 export class AuthController {
