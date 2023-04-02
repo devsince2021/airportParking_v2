@@ -1,8 +1,14 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { validateConfig, AppConfig, DataBaseConfig } from './configs';
+import {
+  validateConfig,
+  AppConfig,
+  MainDbConfig,
+  AuthDbConfig,
+} from './configs';
 import { UsersModule, User } from './users';
 import { AuthModule } from './auth/auth.module';
 
@@ -10,7 +16,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       envFilePath: `./.env.${process.env.NODE_ENV}`,
-      validate: validateConfig([AppConfig, DataBaseConfig]),
+      validate: validateConfig([AppConfig, MainDbConfig, AuthDbConfig]),
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
@@ -25,6 +31,14 @@ import { AuthModule } from './auth/auth.module';
           database: configService.get('DB_DATABASE'),
           entities: [User],
           synchronize: configService.get('DB_SYNC'),
+        };
+      },
+    }),
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          uri: configService.get('AUTH_DB_URI'),
         };
       },
     }),

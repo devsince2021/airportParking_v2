@@ -1,12 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { SendVerifyCodeReqDto } from './dtos/auth.sendVerifyCodeDto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
-  async sendVerifyCode() {
-    const response = this.authService.sendVerifyCode();
+  @Post('verifyCode')
+  async sendVerifyCode(@Body('phone') phone: SendVerifyCodeReqDto['phone']) {
+    return this.authService.sendVerifyCode(phone);
   }
 }

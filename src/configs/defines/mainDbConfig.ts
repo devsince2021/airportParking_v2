@@ -4,7 +4,7 @@ enum DB_TYPE {
   Mysql = 'mysql',
 }
 
-export class DataBaseConfig {
+export class MainDbConfig {
   @IsNumber()
   DB_PORT: number;
 
