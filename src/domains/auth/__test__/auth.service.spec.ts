@@ -1,31 +1,21 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose';
-
 import { AuthService } from '../services/auth.service';
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
-import { PhoneVerification } from '../entities/phoneVerification';
 
 import { mockSendVerifyCodeReqDto } from './mocks/auth.sendVerifyCodeDto';
 import { mockPhoneVerificationDocument } from './mocks/auth.entity';
+import { NaverService } from '../services/naver.service';
+import { createTestModule } from './createTestModule';
 
 describe('AuthService', () => {
   let service: AuthService;
   let repo: PhoneVerificationRepository;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AuthService,
-        PhoneVerificationRepository,
-        {
-          provide: getModelToken(PhoneVerification.name),
-          useClass: PhoneVerification,
-        },
-      ],
-    }).compile();
+    const testModule = await createTestModule();
+    service = testModule.service;
+    repo = testModule.repo;
 
-    service = module.get<AuthService>(AuthService);
-    repo = module.get<PhoneVerificationRepository>(PhoneVerificationRepository);
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {

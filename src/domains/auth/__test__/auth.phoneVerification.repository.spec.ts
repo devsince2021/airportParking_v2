@@ -1,36 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose';
-
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
-import {
-  PhoneVerification,
-  PhoneVerificationDocument,
-} from '../entities/phoneVerification';
+import { PhoneVerificationDocument } from '../entities/phoneVerification';
 
 import { mockPhoneVerificationDocument } from './mocks/auth.entity';
 import { mockVerificationRecord } from './mocks/auth.phoneVerificationRecordDto';
+import { createTestModule } from './createTestModule';
 
 describe('AuthController', () => {
   let repo: PhoneVerificationRepository;
   let schema;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PhoneVerificationRepository,
-        {
-          provide: getModelToken(PhoneVerification.name),
-          useValue: {
-            create: jest
-              .fn()
-              .mockResolvedValue(mockPhoneVerificationDocument()),
-          },
-        },
-      ],
-    }).compile();
+    const testModule = await createTestModule();
+    repo = testModule.repo;
+    schema = testModule.schema;
 
-    repo = module.get<PhoneVerificationRepository>(PhoneVerificationRepository);
-    schema = module.get(getModelToken(PhoneVerification.name));
     jest.restoreAllMocks();
   });
 

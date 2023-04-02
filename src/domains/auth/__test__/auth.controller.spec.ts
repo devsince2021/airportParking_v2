@@ -13,6 +13,7 @@ import {
   mockSendVerifyCodeResDto,
 } from './mocks/auth.sendVerifyCodeDto';
 import { mockVerificationRecord } from './mocks/auth.phoneVerificationRecordDto';
+import { createTestModule } from './createTestModule';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -20,21 +21,12 @@ describe('AuthController', () => {
   let repo: PhoneVerificationRepository;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [AuthController],
-      providers: [
-        AuthService,
-        PhoneVerificationRepository,
-        {
-          provide: getModelToken(PhoneVerification.name),
-          useClass: PhoneVerification,
-        },
-      ],
-    }).compile();
+    const testModule = await createTestModule();
+    controller = testModule.controller;
+    service = testModule.service;
+    repo = testModule.repo;
 
-    controller = module.get<AuthController>(AuthController);
-    service = module.get<AuthService>(AuthService);
-    repo = module.get<PhoneVerificationRepository>(PhoneVerificationRepository);
+    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {
