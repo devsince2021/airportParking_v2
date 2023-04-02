@@ -8,15 +8,21 @@ import {
   AppConfig,
   MainDbConfig,
   AuthDbConfig,
+  SwaggerConfig,
 } from './configs';
-import { UsersModule, User } from './users';
-import { AuthModule } from './auth/auth.module';
+import { UsersModule, User } from './domains/users';
+import { AuthModule } from './domains/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: `./.env.${process.env.NODE_ENV}`,
-      validate: validateConfig([AppConfig, MainDbConfig, AuthDbConfig]),
+      validate: validateConfig([
+        AppConfig,
+        MainDbConfig,
+        AuthDbConfig,
+        SwaggerConfig,
+      ]),
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({

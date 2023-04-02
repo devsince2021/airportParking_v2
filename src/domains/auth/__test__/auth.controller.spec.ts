@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 
-import { AuthController } from '../auth.controller';
+import { AuthController } from '../controllers/auth.controller';
 import { AuthService } from '../auth.service';
-import { SendVerifyCodeResDto } from '../dtos/auth.sendVerifyCodeDto';
+import { ISendVerifyCodeResDto } from '../dtos/auth.sendVerifyCodeDto';
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
 import { PhoneVerification } from '../entities/phoneVerification';
 
@@ -42,7 +42,7 @@ describe('AuthController', () => {
 
   describe('sendVerifyCode', () => {
     describe('when sendVerifyCode is called', () => {
-      let response: SendVerifyCodeResDto;
+      let response: ISendVerifyCodeResDto;
 
       beforeEach(async () => {
         jest
