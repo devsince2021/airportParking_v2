@@ -1,4 +1,4 @@
-import { PhoneVerificationRecord } from '../../dtos/auth.phoneVerificaitonRecordDto';
+import { PhoneVerificationRecord } from '../../dtos/auth.phoneVerificationRecordDto';
 
 // service
 export const mockVerificationRecord = (): PhoneVerificationRecord => {

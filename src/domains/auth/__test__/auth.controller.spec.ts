@@ -12,6 +12,7 @@ import {
   mockSendVerifyCodeReqDto,
   mockSendVerifyCodeResDto,
 } from './mocks/auth.sendVerifyCodeDto';
+import { mockVerificationRecord } from './mocks/auth.phoneVerificationRecordDto';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -51,11 +52,9 @@ describe('AuthController', () => {
 
         jest
           .spyOn(service, 'sendVerifyCode')
-          .mockResolvedValue(mockSendVerifyCodeResDto());
+          .mockResolvedValue(mockVerificationRecord());
 
-        response = await controller.sendVerifyCode(
-          mockSendVerifyCodeReqDto().phone,
-        );
+        response = await controller.sendVerifyCode(mockSendVerifyCodeReqDto());
       });
 
       it('should call authService', () => {

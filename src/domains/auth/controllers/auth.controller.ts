@@ -1,5 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import _ from 'lodash';
+
 import { AuthService } from '../auth.service';
 import { SendVerifyCodeReqDto } from '../dtos/auth.sendVerifyCodeDto';
 
@@ -14,6 +16,8 @@ export class AuthController {
   @ApiOkResponse(RESPONSE.sendVerifyCode)
   @Post('verificationCode')
   async sendVerifyCode(@Body() dto: SendVerifyCodeReqDto) {
-    return this.authService.sendVerifyCode(dto.phone);
+    const result = this.authService.sendVerifyCode(dto.phone);
+
+    return { isSuccess: !_.isNil(result) };
   }
 }
