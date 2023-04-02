@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 
 import { AuthController } from '../controllers/auth.controller';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { ISendVerifyCodeResDto } from '../dtos/auth.sendVerifyCodeDto';
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
 import { PhoneVerification } from '../entities/phoneVerification';
