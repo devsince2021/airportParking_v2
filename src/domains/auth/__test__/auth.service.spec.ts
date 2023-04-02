@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
 import { PhoneVerification } from '../entities/phoneVerification';
 

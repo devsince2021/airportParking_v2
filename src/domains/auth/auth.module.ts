@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
 import { PhoneVerificationRepository } from './repositories/auth.phoneVerification.repository';
 
