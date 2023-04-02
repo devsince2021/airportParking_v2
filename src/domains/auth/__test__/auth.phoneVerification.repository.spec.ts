@@ -8,7 +8,7 @@ import {
 } from '../entities/phoneVerification';
 
 import { mockPhoneVerificationDocument } from './mocks/auth.entity';
-import { mockVerificationRecord } from './mocks/auth.sendVerifyCodeDto';
+import { mockVerificationRecord } from './mocks/auth.phoneVerificationRecordDto';
 
 describe('AuthController', () => {
   let repo: PhoneVerificationRepository;
