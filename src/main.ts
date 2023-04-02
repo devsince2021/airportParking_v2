@@ -1,8 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+
+import { Swagger } from './swagger';
 import { AppModule } from './app.module';
 
-const getConfigs = (config: ConfigService) => {
+export const getAppConfig = (config: ConfigService) => {
   const port = config.get('APP_PORT');
   const env = config.get('NODE_ENV');
 
@@ -11,8 +13,14 @@ const getConfigs = (config: ConfigService) => {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const { port, env } = getConfigs(app.get(ConfigService));
+  const configService = app.get(ConfigService);
 
+  const { port, env } = getAppConfig(configService);
+
+  // swagger init
+  Swagger.initialize(app, configService);
+
+  // server run
   app.listen(port, () => {
     console.log(`server on port: ${port}, env: ${env}`);
   });
