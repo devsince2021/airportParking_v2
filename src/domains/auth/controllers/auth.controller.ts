@@ -16,7 +16,7 @@ export class AuthController {
   @ApiOkResponse(RESPONSE.sendVerifyCode)
   @Post('verificationCode')
   async sendVerifyCode(@Body() dto: SendVerifyCodeReqDto) {
-    const result = this.authService.sendVerifyCode(dto.phone);
+    const result = await this.authService.sendVerifyCode(dto.phone);
 
     return { isSuccess: !_.isNil(result) };
   }

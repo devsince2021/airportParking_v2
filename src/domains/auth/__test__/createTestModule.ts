@@ -5,17 +5,19 @@ import { AuthService } from '../services/auth.service';
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
 import { PhoneVerification } from '../entities/phoneVerification';
 
-import { mockSendVerifyCodeReqDto } from './mocks/auth.sendVerifyCodeDto';
 import { mockPhoneVerificationDocument } from './mocks/auth.entity';
 import { NaverService } from '../services/naver.service';
 import { AuthController } from '../controllers/auth.controller';
+import { ConfigModule } from '@nestjs/config';
 
 export const createTestModule = async () => {
   const module: TestingModule = await Test.createTestingModule({
+    imports: [ConfigModule],
     controllers: [AuthController],
     providers: [
       AuthService,
       PhoneVerificationRepository,
+      NaverService,
       {
         provide: getModelToken(PhoneVerification.name),
         useValue: {

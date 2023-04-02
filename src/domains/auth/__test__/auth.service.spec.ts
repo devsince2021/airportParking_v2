@@ -3,7 +3,6 @@ import { PhoneVerificationRepository } from '../repositories/auth.phoneVerificat
 
 import { mockSendVerifyCodeReqDto } from './mocks/auth.sendVerifyCodeDto';
 import { mockPhoneVerificationDocument } from './mocks/auth.entity';
-import { NaverService } from '../services/naver.service';
 import { createTestModule } from './createTestModule';
 
 describe('AuthService', () => {
