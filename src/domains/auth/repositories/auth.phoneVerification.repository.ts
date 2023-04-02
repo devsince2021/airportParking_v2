@@ -7,7 +7,7 @@ import {
   PhoneVerification,
   PhoneVerificationDocument,
 } from '../entities/phoneVerification';
-import { PhoneVerificationRecord } from '../dtos/auth.phoneVerificaitonRecordDto';
+import { PhoneVerificationRecord } from '../dtos/auth.phoneVerificationRecordDto';
 
 @Injectable()
 export class PhoneVerificationRepository {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { PhoneVerificationRepository } from './repositories/auth.phoneVerification.repository';
-import { PhoneVerificationRecord } from './dtos/auth.phoneVerificaitonRecordDto';
+import { PhoneVerificationRecord } from './dtos/auth.phoneVerificationRecordDto';
 
 @Injectable()
 export class AuthService {
