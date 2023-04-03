@@ -21,7 +21,9 @@ export class AuthController {
     return { isSuccess };
   }
 
-  @Post('validationSmsCode')
+  @ApiOperation(OPERATION.verifyCode)
+  @ApiOkResponse(RESPONSE.verifyCode)
+  @Post('verifySmsCode')
   async verifyCode(@Body() dto: VerifyCodeReqDto) {
     const isValid = await this.authService.verifyCode(dto);
 

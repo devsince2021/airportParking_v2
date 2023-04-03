@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 const dtoSwagger = {
   phone: {
@@ -9,6 +9,10 @@ const dtoSwagger = {
   code: {
     example: '4892',
     description: '4자리의 인증코드',
+  },
+  isSuccess: {
+    example: true,
+    description: '유효한 코드인지 확인 결과',
   },
 };
 
@@ -31,4 +35,11 @@ export class VerifyCodeReqDto implements IVerifyReqCode {
   @IsNotEmpty()
   @IsString()
   code: string;
+}
+
+export class VerifyCodeResDto implements IVerifyResCode {
+  @ApiProperty(dtoSwagger.isSuccess)
+  @IsNotEmpty()
+  @IsBoolean()
+  isSuccess: boolean;
 }
