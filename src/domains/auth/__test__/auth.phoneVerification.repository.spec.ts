@@ -1,36 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose';
-
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
-import {
-  PhoneVerification,
-  PhoneVerificationDocument,
-} from '../entities/phoneVerification';
+import { PhoneVerificationDocument } from '../entities/phoneVerification';
 
 import { mockPhoneVerificationDocument } from './mocks/auth.entity';
 import { mockVerificationRecord } from './mocks/auth.phoneVerificationRecordDto';
+import { createTestModule } from './createTestModule';
 
 describe('AuthController', () => {
   let repo: PhoneVerificationRepository;
   let schema;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PhoneVerificationRepository,
-        {
-          provide: getModelToken(PhoneVerification.name),
-          useValue: {
-            create: jest
-              .fn()
-              .mockResolvedValue(mockPhoneVerificationDocument()),
-          },
-        },
-      ],
-    }).compile();
+    const testModule = await createTestModule();
+    repo = testModule.repo;
+    schema = testModule.schema;
 
-    repo = module.get<PhoneVerificationRepository>(PhoneVerificationRepository);
-    schema = module.get(getModelToken(PhoneVerification.name));
     jest.restoreAllMocks();
   });
 
@@ -40,45 +23,44 @@ describe('AuthController', () => {
 
   describe('upsert', () => {
     describe('when upsert is called', () => {
+      let document;
+      let record;
+
       beforeEach(async () => {
+        document = mockPhoneVerificationDocument();
+        record = mockVerificationRecord();
         jest.restoreAllMocks();
       });
 
       it('should create new record, when there is not a record having the same phone', async () => {
         jest.spyOn(repo, 'findOne').mockResolvedValue(null);
-        jest
-          .spyOn(schema, 'create')
-          .mockResolvedValue(mockPhoneVerificationDocument());
-        jest
-          .spyOn(repo, 'insert')
-          .mockResolvedValue(mockPhoneVerificationDocument());
+        jest.spyOn(schema, 'create').mockResolvedValue(document);
+        jest.spyOn(repo, 'insert').mockResolvedValue(document);
 
-        await repo.upsert(mockVerificationRecord());
+        await repo.upsert(record);
 
-        expect(repo.insert).toBeCalledWith(mockVerificationRecord());
+        expect(repo.insert).toBeCalledWith(record);
       });
 
       it('should update record, when there is a record having the same phone', async () => {
-        const doc = mockPhoneVerificationDocument();
-        const dto = mockVerificationRecord();
         const mockingDoc = {
-          phone: doc.phone,
-          code: dto.code,
+          phone: document.phone,
+          code: record.code,
         };
 
-        jest.spyOn(repo, 'findOne').mockResolvedValue(doc);
+        jest.spyOn(repo, 'findOne').mockResolvedValue(document);
 
         jest
           .spyOn(repo, 'update')
           .mockResolvedValue(mockingDoc as PhoneVerificationDocument);
 
-        const result = await repo.upsert(dto);
+        const result = await repo.upsert(record);
 
-        expect(repo.update).toBeCalledWith(doc, dto);
+        expect(repo.update).toBeCalledWith(document, record);
 
-        expect(result.phone).toBe(dto.phone);
-        expect(result.code).not.toBe(doc.code);
-        expect(result.code).toBe(dto.code);
+        expect(result.phone).toBe(record.phone);
+        expect(result.code).not.toBe(document.code);
+        expect(result.code).toBe(record.code);
       });
     });
   });

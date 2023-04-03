@@ -1,9 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import _ from 'lodash';
 
 import { AuthService } from '../services/auth.service';
 import { SendVerifyCodeReqDto } from '../dtos/auth.sendVerifyCodeDto';
+import { VerifyCodeReqDto } from '../dtos/auth.verifyCodeDto';
 
 import { TAG, OPERATION, RESPONSE } from './swaggerDefine';
 
@@ -14,10 +14,17 @@ export class AuthController {
 
   @ApiOperation(OPERATION.sendVerifyCode)
   @ApiOkResponse(RESPONSE.sendVerifyCode)
-  @Post('verificationCode')
+  @Post('smsCode')
   async sendVerifyCode(@Body() dto: SendVerifyCodeReqDto) {
-    const result = this.authService.sendVerifyCode(dto.phone);
+    const isSuccess = await this.authService.sendVerifyCode(dto.phone);
 
-    return { isSuccess: !_.isNil(result) };
+    return { isSuccess };
+  }
+
+  @Post('validationSmsCode')
+  async verifyCode(@Body() dto: VerifyCodeReqDto) {
+    const isValid = await this.authService.verifyCode(dto);
+
+    return { isSuccess: isValid };
   }
 }

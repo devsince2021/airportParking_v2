@@ -12,6 +12,7 @@ import {
 } from './configs';
 import { UsersModule, User } from './domains/users';
 import { AuthModule } from './domains/auth/auth.module';
+import { NaverConfig } from './configs/defines/naverConfig';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthModule } from './domains/auth/auth.module';
         MainDbConfig,
         AuthDbConfig,
         SwaggerConfig,
+        NaverConfig,
       ]),
       isGlobal: true,
     }),
@@ -51,6 +53,7 @@ import { AuthModule } from './domains/auth/auth.module';
     UsersModule,
     AuthModule,
   ],
+
   controllers: [],
 })
 export class AppModule {}
