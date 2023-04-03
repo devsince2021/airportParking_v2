@@ -5,7 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 export class Swagger {
   static initialize(app: INestApplication, config: ConfigService) {
     const document = Swagger.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('api-docs', app, document);
   }
 
   static createDocument(app: INestApplication, config: ConfigService) {
