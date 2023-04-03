@@ -5,6 +5,7 @@ import { NaverService } from '../services/naver.service';
 import { mockSendVerifyCodeReqDto } from './mocks/auth.sendVerifyCodeDto';
 import { mockPhoneVerificationDocument } from './mocks/auth.entity';
 import { createTestModule } from './createTestModule';
+import { mockVerifyCodeReqDto } from './mocks/auth.verifyCodeDto';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -75,6 +76,75 @@ describe('AuthService', () => {
       it('should always return different string', () => {
         const newCode = service.createCode();
         expect(code).not.toBe(newCode);
+      });
+    });
+  });
+
+  describe('verifyCode', () => {
+    describe('when verifyCode is called', () => {
+      let document;
+
+      beforeEach(async () => {
+        document = mockPhoneVerificationDocument();
+        jest.spyOn(service, 'checkIsValid').mockReturnValue(true);
+      });
+
+      it('should return true when record is valid', async () => {
+        jest.spyOn(repo, 'findOne').mockResolvedValue(document);
+        jest.spyOn(service, 'checkIsValid').mockReturnValue(true);
+        const response = await service.verifyCode(mockVerifyCodeReqDto());
+        expect(response).toBe(true);
+      });
+
+      it('should return false when record is invalid', async () => {
+        jest.spyOn(repo, 'findOne').mockResolvedValue(document);
+        jest.spyOn(service, 'checkIsValid').mockReturnValue(false);
+        const response = await service.verifyCode(mockVerifyCodeReqDto());
+        expect(response).toBe(false);
+      });
+
+      it('should return false when findOne fail', async () => {
+        jest.spyOn(repo, 'findOne').mockResolvedValue(null);
+        const response = await service.verifyCode(mockVerifyCodeReqDto());
+        expect(response).toBe(false);
+      });
+    });
+  });
+
+  describe('validateCode', () => {
+    describe('when createCode is called', () => {
+      it('should return false when code is different', () => {
+        const mockDocument = {
+          phone: '01011111111',
+          code: '0000',
+          updatedAt: {
+            getTime: jest.fn().mockReturnValue(Date.now()),
+          },
+        } as any;
+
+        const mockDto = {
+          ...mockVerifyCodeReqDto(),
+          phone: '01011111111',
+          code: '1111',
+        };
+
+        const res = service.checkIsValid(mockDto, mockDocument);
+        expect(res).toBe(false);
+      });
+
+      it('should return false if record updated earlier than 3 minutes', () => {
+        const FOUR_MINUTE = 4 * 60 * 1000;
+        const mockDocument = {
+          ...mockPhoneVerificationDocument(),
+
+          updatedAt: {
+            getTime: jest.fn().mockReturnValue(Date.now() + FOUR_MINUTE),
+          },
+        } as any;
+
+        const res = service.checkIsValid(mockVerifyCodeReqDto(), mockDocument);
+
+        expect(res).toBe(false);
       });
     });
   });

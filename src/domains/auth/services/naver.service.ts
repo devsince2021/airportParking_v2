@@ -5,11 +5,11 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import { PhoneVerificationRecord } from '../dtos/auth.phoneVerificationRecordDto';
 import {
   RequestSmsBody,
   RequestSmsConfig,
 } from '../interfaces/auth.requestSms';
+import { PhoneVerificationRecord } from '../dtos/auth.phoneVerificationRecordDto';
 
 @Injectable()
 export class NaverService {
