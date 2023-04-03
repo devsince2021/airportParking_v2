@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
+import { HttpModule } from '@nestjs/axios';
 
 import { AuthService } from '../services/auth.service';
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
@@ -12,7 +13,7 @@ import { ConfigModule } from '@nestjs/config';
 
 export const createTestModule = async () => {
   const module: TestingModule = await Test.createTestingModule({
-    imports: [ConfigModule],
+    imports: [ConfigModule, HttpModule],
     controllers: [AuthController],
     providers: [
       AuthService,
@@ -34,7 +35,7 @@ export const createTestModule = async () => {
   );
 
   const schema = module.get(getModelToken(PhoneVerification.name));
-  // const naverService = module.get<NaverService>(NaverService);
+  const naverService = module.get<NaverService>(NaverService);
 
-  return { service, repo, schema, controller };
+  return { service, repo, schema, controller, naverService };
 };

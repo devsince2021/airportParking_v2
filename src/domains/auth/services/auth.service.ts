@@ -14,18 +14,19 @@ export class AuthService {
   ) {}
 
   async sendVerifyCode(phone: string) {
-    const dto: PhoneVerificationRecord = {
-      phone,
-      code: this.createCode(),
-    };
+    try {
+      const dto: PhoneVerificationRecord = {
+        phone,
+        code: this.createCode(),
+      };
 
-    const record = await this.phoneVerificationRepository.upsert(dto);
-    const test = await this.naverService.requestSMS(record);
+      const record = await this.phoneVerificationRepository.upsert(dto);
+      const isSuccess = await this.naverService.requestSMS(record);
 
-    return {
-      phone: record.phone,
-      code: record.code,
-    };
+      return isSuccess;
+    } catch (err) {
+      return false;
+    }
   }
 
   createCode() {

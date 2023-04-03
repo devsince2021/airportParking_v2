@@ -1,18 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose';
-
 import { AuthController } from '../controllers/auth.controller';
 import { AuthService } from '../services/auth.service';
 import { ISendVerifyCodeResDto } from '../dtos/auth.sendVerifyCodeDto';
 import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
-import { PhoneVerification } from '../entities/phoneVerification';
 
 import { mockPhoneVerificationDocument } from './mocks/auth.entity';
 import {
   mockSendVerifyCodeReqDto,
   mockSendVerifyCodeResDto,
 } from './mocks/auth.sendVerifyCodeDto';
-import { mockVerificationRecord } from './mocks/auth.phoneVerificationRecordDto';
 import { createTestModule } from './createTestModule';
 
 describe('AuthController', () => {
@@ -42,9 +37,7 @@ describe('AuthController', () => {
           .spyOn(repo, 'upsert')
           .mockResolvedValue(mockPhoneVerificationDocument());
 
-        jest
-          .spyOn(service, 'sendVerifyCode')
-          .mockResolvedValue(mockVerificationRecord());
+        jest.spyOn(service, 'sendVerifyCode').mockResolvedValue(true);
 
         response = await controller.sendVerifyCode(mockSendVerifyCodeReqDto());
       });
