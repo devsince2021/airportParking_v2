@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsString,
+  registerDecorator,
+  ValidationArguments,
+  ValidationOptions,
+} from 'class-validator';
+import _ from 'lodash';
 
 const dtoSwagger = {
   phone: {
@@ -11,6 +19,28 @@ const dtoSwagger = {
     description: '코드 발송의 성공여부',
   },
 };
+
+function IsValidPhone(options?: ValidationOptions) {
+  return function (object: Object, propertyName: string) {
+    registerDecorator({
+      name: 'isValidPhone',
+      target: object.constructor,
+      async: false,
+      propertyName,
+      constraints: [],
+      options,
+      validator: {
+        validate(value: string, args: ValidationArguments) {
+          const regex = /(\d{3})(\d{3,4})(\d{4})/;
+          const res = value.match(regex);
+          if (_.isNil(res)) return false;
+
+          return true;
+        },
+      },
+    });
+  };
+}
 
 export interface ISendVerifyCodeReqDto {
   phone: string;
@@ -24,6 +54,7 @@ export class SendVerifyCodeReqDto implements ISendVerifyCodeReqDto {
   @ApiProperty(dtoSwagger.phone)
   @IsNotEmpty()
   @IsString()
+  @IsValidPhone()
   phone: string;
 }
 

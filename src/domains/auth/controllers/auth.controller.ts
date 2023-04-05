@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from '../services/auth.service';
@@ -6,6 +6,7 @@ import { SendVerifyCodeReqDto } from '../dtos/auth.sendVerifyCodeDto';
 import { VerifyCodeReqDto } from '../dtos/auth.verifyCodeDto';
 
 import { TAG, OPERATION, RESPONSE } from './swaggerDefine';
+import { SmsCodePipe } from '../pipes/smsCodePipe';
 
 @ApiTags(TAG)
 @Controller('auth')
@@ -14,6 +15,7 @@ export class AuthController {
 
   @ApiOperation(OPERATION.sendVerifyCode)
   @ApiOkResponse(RESPONSE.sendVerifyCode)
+  @UsePipes(new SmsCodePipe())
   @Post('smsCode')
   async sendVerifyCode(@Body() dto: SendVerifyCodeReqDto) {
     const isSuccess = await this.authService.sendVerifyCode(dto.phone);
