@@ -1,3 +1,7 @@
 export { AppConfig } from './defines/appConfig';
-export { DataBaseConfig } from './defines/databaseConfig';
+export { MainDbConfig } from './defines/mainDbConfig';
+export { AuthDbConfig } from './defines/authDbConfig';
+export { SwaggerConfig } from './defines/swaggerConfig';
 export { validateConfig } from './configValidator';
+
+export { getAppConfig } from './getAppConfig';
