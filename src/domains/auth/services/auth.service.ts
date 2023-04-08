@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 import _ from 'lodash';
 
-import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
-
-import { NaverService } from './naver.service';
 import { VerifyCodeReqDto } from '../dtos/auth.verifyCodeDto';
-import { PhoneVerificationDocument } from '../entities/phoneVerification';
+import { NaverService } from './naver.service';
 
 @Injectable()
 export class AuthService {
@@ -16,19 +15,16 @@ export class AuthService {
   private readonly threeMinutes = 1000 * 60 * 3;
 
   constructor(
-    private phoneVerificationRepository: PhoneVerificationRepository,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private naverService: NaverService,
   ) {}
 
   async sendVerifyCode(phone: string) {
     try {
-      const dto = {
-        phone,
-        code: this.createCode(),
-      };
+      const code = this.createCode();
 
-      const record = await this.phoneVerificationRepository.upsert(dto);
-      const isSuccess = await this.naverService.requestSMS(record);
+      await this.cacheManager.set(`${phone}`, `${code}`, this.threeMinutes);
+      const isSuccess = await this.naverService.requestSMS({ phone, code });
 
       return isSuccess;
     } catch (err) {
@@ -43,27 +39,11 @@ export class AuthService {
 
   async verifyCode(reqDto: VerifyCodeReqDto) {
     try {
-      const record = await this.phoneVerificationRepository.findOne(reqDto);
+      const code = await this.cacheManager.get(`${reqDto.phone}`);
 
-      if (!_.isNil(record)) {
-        return this.checkIsValid(reqDto, record);
-      }
-
-      return false;
+      return _.isEqual(reqDto.code, code);
     } catch (err) {
       return false;
     }
-  }
-
-  checkIsValid(reqDto: VerifyCodeReqDto, dbRecord: PhoneVerificationDocument) {
-    const currentTime = Date.now();
-    const updatedAt = dbRecord.updatedAt.getTime();
-    const timeLimit = this.threeMinutes;
-
-    const isExpired = currentTime - updatedAt >= timeLimit;
-    const isValidCode = _.isEqual(reqDto.code, dbRecord.code);
-    const isValidPhone = _.isEqual(reqDto.phone, dbRecord.phone);
-
-    return _.every([!isExpired, isValidCode, isValidPhone]);
   }
 }

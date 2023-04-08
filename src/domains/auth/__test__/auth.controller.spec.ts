@@ -1,9 +1,7 @@
 import { AuthController } from '../controllers/auth.controller';
 import { AuthService } from '../services/auth.service';
 import { ISendVerifyCodeResDto } from '../dtos/auth.sendVerifyCodeDto';
-import { PhoneVerificationRepository } from '../repositories/auth.phoneVerification.repository';
 
-import { mockPhoneVerificationDocument } from './mocks/auth.entity';
 import {
   mockSendVerifyCodeReqDto,
   mockSendVerifyCodeResDto,
@@ -18,15 +16,11 @@ import {
 describe('AuthController', () => {
   let controller: AuthController;
   let service: AuthService;
-  let repo: PhoneVerificationRepository;
 
   beforeEach(async () => {
-    // 진짜 클래스를 TestModule에 넣는게 아니고
-    // mock한 값을 넣으면 매번 스파이를 할 필요가 없다.
     const testModule = await createTestModule();
     controller = testModule.controller;
     service = testModule.service;
-    repo = testModule.repo;
 
     jest.restoreAllMocks();
   });
@@ -40,10 +34,6 @@ describe('AuthController', () => {
       let response: ISendVerifyCodeResDto;
 
       beforeEach(async () => {
-        jest
-          .spyOn(repo, 'upsert')
-          .mockResolvedValue(mockPhoneVerificationDocument());
-
         jest.spyOn(service, 'sendVerifyCode').mockResolvedValue(true);
 
         response = await controller.sendVerifyCode(mockSendVerifyCodeReqDto());
@@ -66,12 +56,7 @@ describe('AuthController', () => {
       let response: IVerifyResCode;
 
       beforeEach(async () => {
-        jest
-          .spyOn(repo, 'findOne')
-          .mockResolvedValue(mockPhoneVerificationDocument());
-
         jest.spyOn(service, 'verifyCode').mockResolvedValue(true);
-
         response = await controller.verifyCode(mockVerifyCodeReqDto());
       });
 
