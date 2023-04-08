@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -41,20 +40,12 @@ import { Membership } from './domains/membership';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [User, Workspace, Company, WorkspaceMembership, Membership], //Company, Workspace, WorkspaceMembership, Membership
+          entities: [User, Workspace, Company, WorkspaceMembership, Membership],
           synchronize: configService.get('DB_SYNC'),
-          autoLoadEntities: true,
         };
       },
     }),
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        return {
-          uri: configService.get('AUTH_DB_URI'),
-        };
-      },
-    }),
+
     UsersModule,
     AuthModule,
   ],
@@ -62,5 +53,3 @@ import { Membership } from './domains/membership';
   controllers: [],
 })
 export class AppModule {}
-
-// User, Workspace, Company, WorkspaceMembership, Membership
