@@ -1,6 +1,6 @@
-import { SignInTypes, User, UserRole } from '../../entities/user.entity';
+import { SignInTypes, User } from '../../entities/user.entity';
 
-export const mockValidUser = (): User => {
+export const mockValidUser = () => {
   return {
     id: 1,
     isActive: true,
@@ -8,7 +8,6 @@ export const mockValidUser = (): User => {
     email: 'test@gmail.com',
     phone: '01011111111',
     password: '123',
-    role: UserRole.Staff,
     signInType: SignInTypes.Email,
   };
 };
@@ -20,7 +19,6 @@ export const mockInvalidUser = () => {
     name: 'test',
     email: 'test@gmail.com',
     phone: '01011111111',
-    role: UserRole.Staff,
     // signInType: SignInTypes.Email,
   } as User;
 };

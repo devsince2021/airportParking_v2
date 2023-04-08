@@ -1,17 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
+
+import { Workspace } from '../../workspace';
 
 export enum SignInTypes {
   Email = 'EM',
   Kakao = 'KA',
-}
-
-export enum UserRole {
-  Founder = 'F',
-  CoFounder = 'C',
-  GeneralManager = 'G',
-  Manager = 'M',
-  Staff = 'S',
 }
 
 const userSwagger: Record<keyof User, any> = {
@@ -40,11 +41,11 @@ const userSwagger: Record<keyof User, any> = {
   },
   isActive: {
     example: true,
-    description: '-없는 11자리 전화번호',
+    description: '사용가능한 유저인가',
   },
-  role: {
-    enum: UserRole,
-    enumName: '유저 권한',
+  workspaces: {
+    example: '[1, 2, 19]',
+    description: '사용가능한 모든 워크스페이스의 id',
   },
 };
 
@@ -74,13 +75,6 @@ export class User {
   @Column()
   phone: string;
 
-  @ApiProperty(userSwagger.role)
-  @Column({
-    type: 'enum',
-    enum: UserRole,
-  })
-  role: UserRole;
-
   @ApiProperty(userSwagger.email)
   @Column()
   email: string;
@@ -89,6 +83,7 @@ export class User {
   @Column()
   password: string;
 
-  //@ManyToOne()
-  //Company: Company
+  @ApiProperty(userSwagger.workspaces)
+  @ManyToMany(() => Workspace, (workspace) => workspace.users)
+  workspaces: Workspace[];
 }
