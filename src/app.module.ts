@@ -11,8 +11,12 @@ import {
   SwaggerConfig,
 } from './configs';
 import { UsersModule, User } from './domains/users';
+import { Company } from './domains/companies';
 import { AuthModule } from './domains/auth/auth.module';
 import { NaverConfig } from './configs/defines/naverConfig';
+import { Workspace, WorkspaceMembership } from './domains/workspace';
+
+import { Membership } from './domains/membership';
 
 @Module({
   imports: [
@@ -37,8 +41,9 @@ import { NaverConfig } from './configs/defines/naverConfig';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [User],
+          entities: [User, Workspace, Company, WorkspaceMembership, Membership], //Company, Workspace, WorkspaceMembership, Membership
           synchronize: configService.get('DB_SYNC'),
+          autoLoadEntities: true,
         };
       },
     }),
@@ -57,3 +62,5 @@ import { NaverConfig } from './configs/defines/naverConfig';
   controllers: [],
 })
 export class AppModule {}
+
+// User, Workspace, Company, WorkspaceMembership, Membership
