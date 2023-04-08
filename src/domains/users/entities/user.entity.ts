@@ -11,17 +11,13 @@ import {
 import { Workspace } from '../../workspace';
 
 export enum SignInTypes {
-  Email = 'EM',
+  Phone = 'P',
   Kakao = 'KA',
 }
 
 const userSwagger: Record<keyof User, any> = {
   id: {
     example: 1,
-  },
-  email: {
-    example: 'test@gmail.com',
-    description: '이메일 형식',
   },
   password: {
     example: 'test1234!',
@@ -74,10 +70,6 @@ export class User {
   @ApiProperty(userSwagger.phone)
   @Column()
   phone: string;
-
-  @ApiProperty(userSwagger.email)
-  @Column()
-  email: string;
 
   @ApiProperty(userSwagger.password)
   @Column()

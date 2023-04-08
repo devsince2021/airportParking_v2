@@ -1,10 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, IsNotEmpty, IsEnum } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum } from 'class-validator';
 
 import { SignInTypes } from '../entities/user.entity';
 
 export interface ICreateUserDto {
-  email: string;
   password: string;
   name: string;
   phone: string;
@@ -12,10 +11,6 @@ export interface ICreateUserDto {
 }
 
 const dtoSwagger: Record<keyof ICreateUserDto, any> = {
-  email: {
-    example: 'test@gmail.com',
-    description: '이메일 형식',
-  },
   password: {
     example: 'test1234!',
     description: '소문자 + 숫자 + 특수문자',
@@ -35,11 +30,6 @@ const dtoSwagger: Record<keyof ICreateUserDto, any> = {
 };
 
 export class CreateUserDto implements ICreateUserDto {
-  @ApiProperty(dtoSwagger.email)
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
   @ApiProperty(dtoSwagger.password)
   @IsNotEmpty()
   @IsString()

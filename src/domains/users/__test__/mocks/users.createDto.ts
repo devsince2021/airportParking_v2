@@ -1,12 +1,20 @@
-import { CreateUserDto } from '../../dtos/createUser.dto';
+import { ICreateUserReqDto } from '../../dtos/createUser.dto';
 import { SignInTypes } from '../../entities/user.entity';
 
-export const mockCreateUserDto = (): CreateUserDto => {
+export const mockValidCreateUserDto = (): ICreateUserReqDto => {
   return {
-    email: 'test@gmail.com',
     password: '123',
     name: 'test',
     phone: '01011111111',
-    signInType: SignInTypes.Email,
+    signInType: SignInTypes.Phone,
+  };
+};
+
+export const mockInvalidCreateUserDto = () => {
+  return {
+    password: '123',
+    name: 'test',
+    phone: '01011111111',
+    signInType: SignInTypes.Phone,
   };
 };

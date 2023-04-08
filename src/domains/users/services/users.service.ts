@@ -16,7 +16,7 @@ export class UsersService {
     user.isActive = true;
     user.name = 'test';
     user.phone = '123123';
-    user.signInType = SignInTypes.Email;
+    user.signInType = SignInTypes.Phone;
     const res = await this.usersRepository.save(user);
     return res;
   }
