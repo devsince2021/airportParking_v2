@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   Entity,
-  ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -39,8 +39,8 @@ const userSwagger: Record<keyof User, any> = {
     example: true,
     description: '사용가능한 유저인가',
   },
-  workspaces: {
-    example: '[1, 2, 19]',
+  workspace: {
+    example: '1',
     description: '사용가능한 모든 워크스페이스의 id',
   },
 };
@@ -75,7 +75,7 @@ export class User {
   @Column()
   password: string;
 
-  @ApiProperty(userSwagger.workspaces)
-  @ManyToMany(() => Workspace, (workspace) => workspace.users)
-  workspaces: Workspace[];
+  @ApiProperty(userSwagger.workspace)
+  @ManyToOne(() => Workspace, (workspace) => workspace.users)
+  workspace: Workspace;
 }
