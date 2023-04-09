@@ -1,27 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 import {
+  BaseEntity,
   Column,
   Entity,
-  ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 
 import { Workspace } from '../../workspace';
+import { IsOptional } from 'class-validator';
 
 export enum SignInTypes {
-  Email = 'EM',
+  Phone = 'P',
   Kakao = 'KA',
 }
 
 const userSwagger: Record<keyof User, any> = {
   id: {
     example: 1,
-  },
-  email: {
-    example: 'test@gmail.com',
-    description: '이메일 형식',
   },
   password: {
     example: 'test1234!',
@@ -43,8 +41,8 @@ const userSwagger: Record<keyof User, any> = {
     example: true,
     description: '사용가능한 유저인가',
   },
-  workspaces: {
-    example: '[1, 2, 19]',
+  workspace: {
+    example: '1',
     description: '사용가능한 모든 워크스페이스의 id',
   },
 };
@@ -75,15 +73,12 @@ export class User {
   @Column()
   phone: string;
 
-  @ApiProperty(userSwagger.email)
-  @Column()
-  email: string;
-
   @ApiProperty(userSwagger.password)
   @Column()
   password: string;
 
-  @ApiProperty(userSwagger.workspaces)
-  @ManyToMany(() => Workspace, (workspace) => workspace.users)
-  workspaces: Workspace[];
+  @ApiProperty(userSwagger.workspace)
+  @IsOptional()
+  @ManyToOne(() => Workspace, (workspace) => workspace.users)
+  workspace?: Workspace;
 }

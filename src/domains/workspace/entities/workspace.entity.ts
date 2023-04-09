@@ -1,8 +1,6 @@
 import {
   Column,
   Entity,
-  JoinTable,
-  ManyToMany,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -25,8 +23,7 @@ export class Workspace {
   @Column({ type: 'simple-array' })
   spaceMangers: number[];
 
-  @ManyToMany(() => User, (user) => user.workspaces)
-  @JoinTable()
+  @OneToMany(() => User, (user) => user.workspace)
   users: User[];
 
   @OneToMany(() => Company, (c) => c.workspace)

@@ -8,10 +8,9 @@ import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import _ from 'lodash';
 
-import { CreateUserDto, ICreateUserDto } from '../dtos/createUser.dto';
+import { CreateUserReqDto, ICreateUserReqDto } from '../dtos/createUser.dto';
 
-const errorMessages: Record<keyof ICreateUserDto | 'default', string> = {
-  email: '잘못된 이메일입니다. 이메일을 다시 확인해주세요.',
+const errorMessages: Record<keyof ICreateUserReqDto | 'default', string> = {
   name: '이름을 잘못 입력하였습니다. 이름을 다시 확인해주세요.',
   password: '비밀번호가 잘못되었습니다. 비밀번호를 확인해주세요.',
   phone: '전화번호를 입력해주세요.',
@@ -20,8 +19,8 @@ const errorMessages: Record<keyof ICreateUserDto | 'default', string> = {
 };
 
 @Injectable()
-export class CreateUserPipe implements PipeTransform<CreateUserDto> {
-  async transform(value: CreateUserDto, test: ArgumentMetadata) {
+export class CreateUserPipe implements PipeTransform<CreateUserReqDto> {
+  async transform(value: CreateUserReqDto, test: ArgumentMetadata) {
     const object = plainToInstance(test.metatype, value);
     const errors = await validate(object);
 
@@ -34,7 +33,9 @@ export class CreateUserPipe implements PipeTransform<CreateUserDto> {
   }
 
   createErrorMessage(errors: ValidationError[]) {
-    const { property } = _.head(errors) as { property: keyof ICreateUserDto };
+    const { property } = _.head(errors) as {
+      property: keyof ICreateUserReqDto;
+    };
     return _.get(errorMessages, property, errorMessages.default);
   }
 }

@@ -1,47 +1,47 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BadRequestException } from '@nestjs/common';
 
-import { UsersController } from '../controllers/users.controller';
 import { UsersService } from '../services/users.service';
+import { UsersRepository } from '../repository/users.repository';
 
 import {
   mockValidCreateUserReqDto,
   mockValidCreateUserResDto,
 } from './mocks/users.createDto';
+import { mockValidUser } from './mocks/users.entity';
+import { BadRequestException } from '@nestjs/common';
 
-jest.mock('../services/users.service');
+jest.mock('../repository/users.repository');
 
-describe('UsersController', () => {
-  let controller: UsersController;
+describe('UsersService', () => {
   let service: UsersService;
+  let repository: UsersRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UsersController],
-      providers: [UsersService],
+      providers: [UsersService, UsersRepository],
     }).compile();
 
-    controller = module.get<UsersController>(UsersController);
     service = module.get<UsersService>(UsersService);
+    repository = module.get<UsersRepository>(UsersRepository);
   });
 
   describe('createUser', () => {
-    const reqDto = mockValidCreateUserReqDto();
+    const createUserDto = mockValidCreateUserReqDto();
+    const mockUser = mockValidUser();
     const resDto = mockValidCreateUserResDto();
 
     it('should return CreateUserResDto if creation success', async () => {
-      jest.spyOn(service, 'createUser').mockResolvedValue(resDto);
-      const response = await controller.createUser(reqDto);
-
+      jest.spyOn(repository, 'insert').mockResolvedValue(mockUser);
+      const response = await service.createUser(createUserDto);
       expect(response).toEqual(resDto);
     });
 
     it('should throw when fail to create user', async () => {
       try {
         jest
-          .spyOn(service, 'createUser')
+          .spyOn(repository, 'insert')
           .mockRejectedValue(new BadRequestException());
-        await controller.createUser(reqDto);
+        await service.createUser(createUserDto);
       } catch (err) {
         expect(err).toBeInstanceOf(BadRequestException);
       }
