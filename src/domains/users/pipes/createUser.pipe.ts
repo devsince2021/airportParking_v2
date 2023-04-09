@@ -8,7 +8,7 @@ import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import _ from 'lodash';
 
-import { CreateUserDto, ICreateUserReqDto } from '../dtos/createUser.dto';
+import { CreateUserReqDto, ICreateUserReqDto } from '../dtos/createUser.dto';
 
 const errorMessages: Record<keyof ICreateUserReqDto | 'default', string> = {
   name: '이름을 잘못 입력하였습니다. 이름을 다시 확인해주세요.',
@@ -19,8 +19,8 @@ const errorMessages: Record<keyof ICreateUserReqDto | 'default', string> = {
 };
 
 @Injectable()
-export class CreateUserPipe implements PipeTransform<CreateUserDto> {
-  async transform(value: CreateUserDto, test: ArgumentMetadata) {
+export class CreateUserPipe implements PipeTransform<CreateUserReqDto> {
+  async transform(value: CreateUserReqDto, test: ArgumentMetadata) {
     const object = plainToInstance(test.metatype, value);
     const errors = await validate(object);
 

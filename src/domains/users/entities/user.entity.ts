@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 import {
+  BaseEntity,
   Column,
   Entity,
   ManyToOne,
@@ -9,6 +10,7 @@ import {
 } from 'typeorm';
 
 import { Workspace } from '../../workspace';
+import { IsOptional } from 'class-validator';
 
 export enum SignInTypes {
   Phone = 'P',
@@ -76,6 +78,7 @@ export class User {
   password: string;
 
   @ApiProperty(userSwagger.workspace)
+  @IsOptional()
   @ManyToOne(() => Workspace, (workspace) => workspace.users)
-  workspace: Workspace;
+  workspace?: Workspace;
 }
