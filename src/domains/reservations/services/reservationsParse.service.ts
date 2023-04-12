@@ -6,14 +6,21 @@ import {
   Reservation,
   ServiceType,
 } from '../entities/reservations.entity';
+import { ConfigService } from '@nestjs/config';
 
 type ParsedRow = Record<string, string>;
 
 @Injectable()
-export class CsvService {
+export class ReservationsParseService {
   HEADER_ROW_INDEX = 2;
 
   CHARGE_EXCEPTION = '티몬';
+
+  FILE_UPLOAD_KEY;
+
+  constructor(private configService: ConfigService) {
+    this.FILE_UPLOAD_KEY = this.configService.get('RESERVATION_UPLOAD_KEY');
+  }
 
   parse(files: Express.Request['files'], listDate: string) {
     if (_.isNil(files) || _.isEmpty(files)) return [];

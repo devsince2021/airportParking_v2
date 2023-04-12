@@ -8,14 +8,15 @@ import {
   MainDbConfig,
   AuthDbConfig,
   SwaggerConfig,
+  NaverConfig,
 } from './configs';
+
 import { UsersModule, User } from './domains/users';
 import { Company } from './domains/companies';
 import { AuthModule } from './domains/auth/auth.module';
-import { NaverConfig } from './configs/defines/naverConfig';
 import { Workspace, WorkspaceMembership } from './domains/workspace';
-
 import { Membership } from './domains/membership';
+import { ReservationModule } from './domains/reservations';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { Membership } from './domains/membership';
 
     UsersModule,
     AuthModule,
+    ReservationModule,
   ],
 
   controllers: [],
