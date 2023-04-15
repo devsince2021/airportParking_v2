@@ -35,7 +35,7 @@ describe('CompanyRepository', () => {
     repo = module.get(getRepositoryToken(Company));
   });
 
-  it('should defiend', () => {
+  it('should defined', () => {
     expect(customRepo).toBeDefined();
     expect(repo).toBeDefined();
   });
@@ -112,6 +112,42 @@ describe('CompanyRepository', () => {
         expect(err).toBeInstanceOf(BadRequestError);
         expect(errObj.message).toBe(Company_Repository_Msg.DB_INSERT_DEFAULT);
         expect(errObj.code).toBe(Company_Repository_Code.DB_INSERT_DEFAULT);
+      }
+    });
+  });
+
+  describe('create', () => {
+    const company = mockCompany();
+    const validDto = mockValidCreateCompanyReqDto();
+
+    it('should return company if there is no duplication', async () => {
+      jest.spyOn(customRepo, 'findOne').mockResolvedValue(null);
+      jest.spyOn(customRepo, 'insert').mockResolvedValue(company);
+
+      const result = await customRepo.create(validDto);
+      expect(result).toEqual(company);
+    });
+
+    it('should throw if the company had already been created', async () => {
+      jest.spyOn(customRepo, 'findOne').mockResolvedValue(company);
+      try {
+        await customRepo.create(validDto);
+      } catch (err) {
+        const errObj = JSON.parse(err.message);
+        expect(err).toBeInstanceOf(BadRequestError);
+        expect(errObj.message).toBe(Company_Repository_Msg.DB_INSERT_DEFAULT);
+        expect(errObj.code).toBe(Company_Repository_Code.DB_INSERT_DEFAULT);
+      }
+    });
+
+    it('should throw if error occur while finding company', async () => {
+      jest.spyOn(customRepo, 'findOne').mockRejectedValue(new Error('error'));
+
+      try {
+        await customRepo.create(validDto);
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error);
+        expect(err.message).toBe('error');
       }
     });
   });
