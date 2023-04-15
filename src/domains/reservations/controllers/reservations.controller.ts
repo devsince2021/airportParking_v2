@@ -36,9 +36,13 @@ export class ReservationsController {
     @UploadedFile(new FileValidationPipe())
     file: Express.Multer.File,
   ) {
-    // const isSuccess = this.reservationService.createReservation(date, file);
-    console.log('date', date);
-    console.log('hire', file);
-    return { isSuccess: true };
+    const isSuccess = await this.reservationService.createReservation(
+      date,
+      file,
+    );
+
+    return { isSuccess };
   }
+
+  // 예약 변경 endpoint 추가
 }
