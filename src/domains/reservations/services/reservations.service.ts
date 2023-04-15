@@ -1,12 +1,24 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import _ from 'lodash';
+
+import { ReservationRepository } from '../repositories/reservation.repository';
 import { ReservationsParseService } from './reservationsParse.service';
 
 @Injectable()
 export class ReservationsService {
-  constructor(private parseService: ReservationsParseService) {}
+  constructor(
+    private parseService: ReservationsParseService,
+    private reservationRepository: ReservationRepository,
+  ) {}
 
-  createReservation(date: string, file: Express.Multer.File) {
-    console.log('date', date);
-    console.log('file', file);
+  async createReservation(date: string, file: Express.Multer.File) {
+    const rows = this.parseService.parse([file], date);
+
+    if (!_.isEmpty(rows)) {
+      await this.reservationRepository.bulkUpsert(date, rows);
+      return true;
+    }
+
+    throw new BadRequestException('파일 파싱에 실패하였습니다.');
   }
 }

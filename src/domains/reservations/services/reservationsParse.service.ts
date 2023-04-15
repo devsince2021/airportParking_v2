@@ -18,11 +18,13 @@ export class ReservationsParseService {
 
   FILE_UPLOAD_KEY;
 
+  SERVICE_IN = '입고';
+
   constructor(private configService: ConfigService) {
     this.FILE_UPLOAD_KEY = this.configService.get('RESERVATION_UPLOAD_KEY');
   }
 
-  parse(files: Express.Request['files'], listDate: string) {
+  parse(files: Express.Multer.File[], listDate: string) {
     if (_.isNil(files) || _.isEmpty(files)) return [];
 
     try {
@@ -41,12 +43,13 @@ export class ReservationsParseService {
   }
 
   private convertToDBFormat(listDate: string) {
-    return function (rows: string[]): Omit<Reservation, 'id'> {
+    return (rows: string[]): Omit<Reservation, 'id'> => {
       const serviceCharge = this.chargeStringToNumber(rows[6]);
-      const serviceType = rows[1] || 'I';
+      const serviceType =
+        rows[1] === this.SERVICE_IN ? ServiceType.In : ServiceType.Out;
 
       return {
-        serviceType: serviceType as ServiceType,
+        serviceType: serviceType || ServiceType.In,
         serviceTime: rows[2] || '',
         carType: rows[3] || '',
         plateNumber: rows[4] || '',
@@ -77,9 +80,11 @@ export class ReservationsParseService {
 
     try {
       const workSheet = excelFiles.map(this.getWorkSheet);
+
       const rowsInJson = _.flatMap(workSheet, this.makeJson).map(
         this.trimPropertiesToProtectData,
       );
+
       const rowsInArray = rowsInJson.map(this.convertJsonToArray);
 
       return rowsInArray;
@@ -97,25 +102,25 @@ export class ReservationsParseService {
     return EXCEL_COLUMNS.map((key) => row[key] ?? '');
   }
 
-  private trimPropertiesToProtectData(row: ParsedRow) {
+  private trimPropertiesToProtectData = (row: ParsedRow) => {
     if (_.isNil(row)) return {};
     const trimmed = Object.entries(row).map(([key, value]) => [
       this.trimValues(key),
       this.trimValues(value),
     ]);
     return Object.fromEntries(trimmed);
-  }
+  };
 
   private trimValues(string: string) {
     return _.trim(string);
   }
 
-  private makeJson(sheet: xlsx.WorkSheet): ParsedRow[] {
+  private makeJson = (sheet: xlsx.WorkSheet): ParsedRow[] => {
     return xlsx.utils.sheet_to_json(sheet, {
       raw: false,
       range: this.HEADER_ROW_INDEX,
     });
-  }
+  };
 
   private getWorkSheet(file: Express.Multer.File) {
     const workBook = xlsx.read(file.buffer);
