@@ -16,7 +16,7 @@ import { Company } from './domains/companies';
 import { AuthModule } from './domains/auth/auth.module';
 import { Workspace, WorkspaceMembership } from './domains/workspace';
 import { Membership } from './domains/membership';
-import { ReservationModule } from './domains/reservations';
+import { Reservation, ReservationModule } from './domains/reservations';
 
 @Module({
   imports: [
@@ -41,7 +41,14 @@ import { ReservationModule } from './domains/reservations';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [User, Workspace, Company, WorkspaceMembership, Membership],
+          entities: [
+            User,
+            Workspace,
+            Company,
+            WorkspaceMembership,
+            Membership,
+            Reservation,
+          ],
           synchronize: configService.get('DB_SYNC'),
         };
       },
