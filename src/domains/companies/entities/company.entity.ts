@@ -72,7 +72,7 @@ export class Company {
   workspace?: Workspace;
 
   @OneToMany(() => Reservation, (r) => r.company)
-  reservation: Reservation[];
+  reservation?: Reservation[];
 
   @ApiProperty(companySwagger.isRunning)
   @Column({ default: true })
