@@ -13,7 +13,7 @@ export const mockReservation = (): Reservation => {
     serviceEndDate: '08',
     serviceTime: '07:30',
     listDate: '2022-02-22',
-    companies: [],
+    // company: [],
   };
 };
 
@@ -29,6 +29,6 @@ export const mockReservationWithoutId = () => {
     serviceEndDate: '08',
     serviceTime: '07:30',
     listDate: '2022-02-22',
-    companies: [],
+    // company: [],
   };
 };

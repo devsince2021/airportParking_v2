@@ -30,5 +30,5 @@ export class Workspace {
   companies: Company[];
 
   @OneToOne(() => WorkspaceMembership, (wm) => wm.workspace)
-  membership: WorkspaceMembership;
+  membership?: WorkspaceMembership;
 }

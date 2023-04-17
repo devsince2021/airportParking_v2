@@ -1,14 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Company } from '../../companies';
-import { Workspace } from '../../workspace';
 
 export const EXCEL_COLUMNS = [
   '번호',
@@ -72,8 +65,8 @@ const reservationSwagger: Record<keyof Reservation, any> = {
     example: '2020-02-20',
     description: '예약일',
   },
-  companies: {
-    example: ['김포주차1', '김포주차2'],
+  company: {
+    example: '김포주차1',
     description: '업체명', // 1개의 사장님이 복수개의 회사를 가지고 있는 경우가 있다.
   },
 };
@@ -127,8 +120,7 @@ export class Reservation {
   @Column()
   listDate: string;
 
-  @ApiProperty(reservationSwagger.companies)
-  @ManyToMany(() => Company)
-  @JoinTable()
-  companies: Company[];
+  @ApiProperty(reservationSwagger.company)
+  @ManyToOne(() => Company, (c) => c.reservation)
+  company?: Company;
 }
