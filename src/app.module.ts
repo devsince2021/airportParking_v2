@@ -12,7 +12,7 @@ import {
 } from './configs';
 
 import { UsersModule, User } from './domains/users';
-import { Company } from './domains/companies';
+import { Company, CompanyModule } from './domains/companies';
 import { AuthModule } from './domains/auth/auth.module';
 import { Workspace, WorkspaceMembership } from './domains/workspace';
 import { Membership } from './domains/membership';
@@ -57,6 +57,7 @@ import { Reservation, ReservationModule } from './domains/reservations';
     UsersModule,
     AuthModule,
     ReservationModule,
+    CompanyModule,
   ],
 
   controllers: [],

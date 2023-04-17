@@ -59,7 +59,7 @@ export class ReservationsParseService {
         note: rows[8] || '',
         serviceEndDate: rows[9] || '',
         listDate: listDate || '',
-        companies: [],
+        // companies: [],
       };
     };
   }
