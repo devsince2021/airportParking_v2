@@ -3,11 +3,13 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 
 import { Workspace } from '../../workspace';
+import { Reservation } from 'src/domains/reservations';
 
 const companySwagger: Record<keyof Company, any> = {
   id: {
@@ -32,6 +34,10 @@ const companySwagger: Record<keyof Company, any> = {
   workspace: {
     example: '1',
     description: '소속되어있는 워크스페이스 id',
+  },
+  reservation: {
+    // example: '1',
+    // description: '소속되어있는 워크스페이스 id',
   },
   isRunning: {
     example: 'true',
@@ -64,6 +70,9 @@ export class Company {
 
   @ManyToOne(() => Workspace, (w) => w.companies)
   workspace?: Workspace;
+
+  @OneToMany(() => Reservation, (r) => r.company)
+  reservation: Reservation[];
 
   @ApiProperty(companySwagger.isRunning)
   @Column({ default: true })
