@@ -30,6 +30,11 @@ describe('Company controller [e2e]', () => {
     const dtoWithDup = mockValidCreateCompanyReqDto();
     const successRes = mockCreateCompanyResDtoSuccess();
     const failRes = mockCreateCompanyResDtoFail();
+
+    beforeEach(async () => {
+      // db 삭제 로직 추가
+    });
+
     it('should return company when it success', async () => {
       const response = await request(app.getHttpServer())
         .post('/company')
