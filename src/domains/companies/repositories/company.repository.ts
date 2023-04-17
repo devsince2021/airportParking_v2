@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { BadRequestError } from '../../../utils/customException';
 
 import { Company } from '../entities/company.entity';
-import { ICreateCompanyReqDto } from '../dtos/create.company.dto';
+import { ICreateCompanyReqDto } from '../dtos/createCompany.dto';
 import {
   Company_Repository_Code,
   Company_Repository_Msg,

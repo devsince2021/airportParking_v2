@@ -63,7 +63,7 @@ export class Company {
   registrationNumber: string;
 
   @ManyToOne(() => Workspace, (w) => w.companies)
-  workspace: Workspace;
+  workspace?: Workspace;
 
   @ApiProperty(companySwagger.isRunning)
   @Column({ default: true })
