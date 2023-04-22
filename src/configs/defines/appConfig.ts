@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber } from 'class-validator';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
 
 enum Environment {
   Development = 'development',
@@ -12,4 +12,10 @@ export class AppConfig {
 
   @IsNumber()
   APP_PORT: number;
+
+  @IsString()
+  RESERVATION_UPLOAD_KEY: string;
+
+  @IsString()
+  RESERVATION_UPLOAD_URL: string;
 }

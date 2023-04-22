@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -9,10 +8,15 @@ import {
   MainDbConfig,
   AuthDbConfig,
   SwaggerConfig,
+  NaverConfig,
 } from './configs';
+
 import { UsersModule, User } from './domains/users';
+import { Company, CompanyModule } from './domains/companies';
 import { AuthModule } from './domains/auth/auth.module';
-import { NaverConfig } from './configs/defines/naverConfig';
+import { Workspace, WorkspaceMembership } from './domains/workspace';
+import { Membership } from './domains/membership';
+import { Reservation, ReservationModule } from './domains/reservations';
 
 @Module({
   imports: [
@@ -37,21 +41,23 @@ import { NaverConfig } from './configs/defines/naverConfig';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [User],
+          entities: [
+            User,
+            Workspace,
+            Company,
+            WorkspaceMembership,
+            Membership,
+            Reservation,
+          ],
           synchronize: configService.get('DB_SYNC'),
         };
       },
     }),
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        return {
-          uri: configService.get('AUTH_DB_URI'),
-        };
-      },
-    }),
+
     UsersModule,
     AuthModule,
+    ReservationModule,
+    CompanyModule,
   ],
 
   controllers: [],

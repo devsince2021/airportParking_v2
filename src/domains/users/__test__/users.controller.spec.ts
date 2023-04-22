@@ -1,58 +1,50 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { BadRequestException } from '@nestjs/common';
 
-import { User } from '../entities/user.entity';
 import { UsersController } from '../controllers/users.controller';
 import { UsersService } from '../services/users.service';
 
-import { mockCreateUserDto } from './mocks/users.createDto';
-import { mockValidUser } from './mocks/users.entity';
+import {
+  mockValidCreateUserReqDto,
+  mockValidCreateUserResDto,
+} from './mocks/users.createDto';
+
+jest.mock('../services/users.service');
 
 describe('UsersController', () => {
   let controller: UsersController;
   let service: UsersService;
-  let repository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [
-        UsersService,
-        {
-          provide: getRepositoryToken(User),
-          useClass: Repository,
-        },
-      ],
+      providers: [UsersService],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
     service = module.get<UsersService>(UsersService);
-    repository = module.get<Repository<User>>(getRepositoryToken(User));
-    jest.clearAllMocks();
-  });
-
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
   });
 
   describe('createUser', () => {
-    describe('when createUser is called', () => {
-      let user: User;
+    const reqDto = mockValidCreateUserReqDto();
+    const resDto = mockValidCreateUserResDto();
 
-      beforeEach(async () => {
-        jest.spyOn(repository, 'save').mockResolvedValue(mockValidUser());
-        jest.spyOn(service, 'createUser').mockResolvedValue(mockValidUser());
-        user = await controller.createUser(mockCreateUserDto());
-      });
+    it('should return CreateUserResDto if creation success', async () => {
+      jest.spyOn(service, 'createUser').mockResolvedValue(resDto);
+      const response = await controller.createUser(reqDto);
 
-      test('then it should call userService', () => {
-        expect(service.createUser).toBeCalledWith(mockCreateUserDto());
-      });
+      expect(response).toEqual(resDto);
+    });
 
-      test('then it should return a user', () => {
-        expect(user).toEqual(mockValidUser());
-      });
+    it('should throw when fail to create user', async () => {
+      try {
+        jest
+          .spyOn(service, 'createUser')
+          .mockRejectedValue(new BadRequestException());
+        await controller.createUser(reqDto);
+      } catch (err) {
+        expect(err).toBeInstanceOf(BadRequestException);
+      }
     });
   });
 });
