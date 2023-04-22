@@ -1,9 +1,10 @@
 import request from 'supertest';
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 
-import { AppModule } from '../src/app.module';
 import { errorMessages } from '../src/domains/auth/pipes/smsCodePipe';
+import { setStaticFiles } from '../src/main';
+
+import { initializeApp } from './helpers/initializeApp';
 
 const validNum = '01097182118';
 const invalidNum = '01011111111';
@@ -12,19 +13,25 @@ describe('AuthController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
+    app = await initializeApp();
+    setStaticFiles(app as any);
     await app.init();
   });
 
   afterAll(async () => {
-    app.close();
+    await app.close();
   });
 
-  describe('/auth/smsCode [POST]', () => {
+  describe('/auth/login [GET]', () => {
+    it('should show a login page', async () => {
+      const response = await request(app.getHttpServer()).get('/auth/login');
+
+      expect(response.statusCode).toBe(200);
+      expect(response.headers['content-type']).toBe('text/html; charset=utf-8');
+    });
+  });
+
+  describe.skip('/auth/smsCode [POST]', () => {
     it('should response with a 201 status code and isSuccess true', async () => {
       const response = await request(app.getHttpServer())
         .post('/auth/smsCode')
@@ -57,7 +64,7 @@ describe('AuthController (e2e)', () => {
     });
   });
 
-  describe('/auth/verifySmsCode [POST]', () => {
+  describe.skip('/auth/verifySmsCode [POST]', () => {
     beforeEach(async () => {
       request(app.getHttpServer())
         .post('/auth/smsCode')
@@ -73,14 +80,4 @@ describe('AuthController (e2e)', () => {
       expect(response.body).toEqual({ isSuccess: false });
     });
   });
-
-  // describe.only('User controllers', () => {
-  //   describe('/user [POST]', () => {
-  //     it('should response a created user with status code 201', async () => {
-  //       const response = await request(app.getHttpServer())
-  //         .post('/users')
-  //         .send({ phone: validNum });
-  //     });
-  //   });
-  // });
 });

@@ -15,9 +15,10 @@ const getAppConfig = (config: ConfigService) => {
 
 export const setStaticFiles = (app: NestExpressApplication) => {
   app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(
+  app.setBaseViewsDir([
     join(__dirname, '..', 'src', 'domains', 'reservations', 'views'),
-  );
+    join(__dirname, '..', 'src', 'domains', 'auth', 'views'),
+  ]);
   app.setViewEngine('ejs');
 };
 
