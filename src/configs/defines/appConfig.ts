@@ -18,4 +18,7 @@ export class AppConfig {
 
   @IsString()
   API_URL: string;
+
+  @IsString()
+  BASE_URL: string;
 }

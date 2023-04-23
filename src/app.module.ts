@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -17,6 +22,7 @@ import { AuthModule } from './domains/auth/auth.module';
 import { Workspace, WorkspaceMembership } from './domains/workspace';
 import { Membership } from './domains/membership';
 import { Reservation, ReservationModule } from './domains/reservations';
+import { CorsMiddleware } from './cors.middleware';
 
 @Module({
   imports: [
@@ -62,4 +68,13 @@ import { Reservation, ReservationModule } from './domains/reservations';
 
   controllers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(CorsMiddleware)
+      .forRoutes(
+        { path: '/api/auth', method: RequestMethod.POST },
+        { path: '/api/reservation', method: RequestMethod.POST },
+      );
+  }
+}
