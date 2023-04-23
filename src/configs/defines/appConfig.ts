@@ -17,5 +17,5 @@ export class AppConfig {
   RESERVATION_UPLOAD_KEY: string;
 
   @IsString()
-  RESERVATION_UPLOAD_URL: string;
+  API_URL: string;
 }

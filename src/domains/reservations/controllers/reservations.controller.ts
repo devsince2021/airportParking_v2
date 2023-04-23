@@ -23,10 +23,13 @@ export class ReservationsController {
   @Get('/registration')
   @Render('registration.ejs')
   async showRegistration() {
-    const url = this.configService.get('RESERVATION_UPLOAD_URL');
+    const baseUrl = this.configService.get('API_URL');
     const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
 
-    return { url, uploadKey };
+    return {
+      url: `${baseUrl}/reservations`,
+      uploadKey,
+    };
   }
 
   // todo1 - 예약 변경하기 api v1에서 가져오기

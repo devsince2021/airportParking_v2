@@ -11,12 +11,12 @@ form.addEventListener('submit', async (event) => {
 
   const files = getFilesFromEvent(event);
   const uploadDate = event.target.date.value;
-  
+
   if (!uploadDate) {
     alert('업로드 날짜를 선택해주세요');
     return;
   }
-  
+
   if (files.length === 0) {
     alert('파일을 먼저 추가해주세요.');
     return;
@@ -25,15 +25,17 @@ form.addEventListener('submit', async (event) => {
   const formData = getFilesAppendedFormData(files, uploadKey.textContent);
   const result = await sendFormData(formData, uploadDate);
 
-  const message = result.response ? '업로드에 성공하였습니다.' : '업로드에 실패하였습니다.';
+  const message = result.response
+    ? '업로드에 성공하였습니다.'
+    : '업로드에 실패하였습니다.';
   location.reload();
   alert(message);
 });
 
 const getFilesFromEvent = (event) => {
   return [...event.target]
-  .map((input) => input.files?.[0])
-  .filter((file) => file);
+    .map((input) => input.files?.[0])
+    .filter((file) => file);
 };
 
 const getFilesAppendedFormData = (files, formDataKey) => {
