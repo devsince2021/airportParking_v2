@@ -1,1 +1,0 @@
-export { Swagger } from './initializeSwagger';

@@ -2,7 +2,6 @@ import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 
 import { errorMessages } from '../src/domains/auth/pipes/smsCodePipe';
-import { setStaticFiles } from '../src/main';
 
 import { initializeApp } from './helpers/initializeApp';
 
@@ -14,7 +13,6 @@ describe('AuthController (e2e)', () => {
 
   beforeAll(async () => {
     app = await initializeApp();
-    setStaticFiles(app as any);
     await app.init();
   });
 

@@ -4,7 +4,6 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import request from 'supertest';
 
-import { setStaticFiles } from '../src/main';
 import { initializeApp } from './helpers/initializeApp';
 
 describe('Reservation controller [e2e]', () => {
@@ -13,8 +12,6 @@ describe('Reservation controller [e2e]', () => {
 
   beforeAll(async () => {
     app = await initializeApp();
-    setStaticFiles(app as any);
-
     configService = app.get<ConfigService>(ConfigService);
     await app.init();
   });
