@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const loader = await Loader.create(AppModule);
 
-  loader.setStaticFiles().setSwagger().runServer();
+  loader.setStaticFiles().setSession().setSwagger().runServer();
 }
 
 bootstrap();

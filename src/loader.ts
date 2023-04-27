@@ -5,6 +5,9 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+
 export class Loader {
   private app: NestExpressApplication;
 
@@ -46,6 +49,30 @@ export class Loader {
 
     const document = SwaggerModule.createDocument(this.app, documentBuilder);
     SwaggerModule.setup('api-docs', this.app, document);
+
+    return this;
+  }
+
+  setSession() {
+    const env = this.config.get('NODE_ENV');
+    const mongoUrl = this.config.get('AUTH_DB_URI');
+    const secret = this.config.get('SESSION_SECRET');
+    const ttl = this.config.get('SESSION_TTL') * 24 * 60 * 60;
+
+    const store = MongoStore.create({
+      mongoUrl,
+      ttl,
+      collectionName: `${env}_session`,
+    });
+
+    this.app.use(
+      session({
+        store,
+        secret,
+        resave: false,
+        saveUninitialized: false,
+      }),
+    );
 
     return this;
   }
