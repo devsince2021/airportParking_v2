@@ -10,6 +10,7 @@ export const mockValidCreateUserReqDto = (): ICreateUserReqDto => {
     name: '김아무개',
     phone: '01011111111',
     signInType: SignInTypes.Phone,
+    userId: 'awepf2',
   };
 };
 
@@ -29,6 +30,7 @@ export const mockValidCreateUserResDto = (): ICreateUserResDto => {
     isActive: true,
     name: '김아무개',
     phone: '01011111111',
+    userId: 'awepf2',
   };
 };
 

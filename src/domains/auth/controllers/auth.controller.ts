@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Render, UsePipes } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from '../services/auth.service';
@@ -9,15 +9,9 @@ import { TAG, OPERATION, RESPONSE } from './swaggerDefine';
 import { SmsCodePipe } from '../pipes/smsCodePipe';
 
 @ApiTags(TAG)
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
-  @Get('login')
-  @Render('login.ejs')
-  async showLoginView() {
-    return {};
-  }
 
   @ApiOperation(OPERATION.sendVerifyCode)
   @ApiOkResponse(RESPONSE.sendVerifyCode)

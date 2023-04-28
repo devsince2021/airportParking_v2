@@ -8,17 +8,15 @@ import {
 } from 'class-validator';
 
 import { Workspace } from '../../workspace';
-import { SignInTypes } from '../entities/user.entity';
+import { SignInTypes, User } from '../entities/user.entity';
 
-// request
-export interface ICreateUserReqDto {
-  password: string;
-  name: string;
-  phone: string;
-  signInType: SignInTypes;
-}
+export type ICreateUserReqDto = Omit<User, 'id' | 'isActive' | 'workspace'>;
 
 const reqDtoSwagger: Record<keyof ICreateUserReqDto, any> = {
+  userId: {
+    example: 'awef123',
+    description: '임의의 텍스트',
+  },
   password: {
     example: 'test1234!',
     description: '소문자 + 숫자 + 특수문자',
@@ -43,6 +41,11 @@ export class CreateUserReqDto implements ICreateUserReqDto {
   @IsString()
   password: string;
 
+  @ApiProperty(reqDtoSwagger.userId)
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+
   @ApiProperty(reqDtoSwagger.name)
   @IsNotEmpty()
   @IsString()
@@ -59,15 +62,7 @@ export class CreateUserReqDto implements ICreateUserReqDto {
   signInType: SignInTypes;
 }
 
-// response
-export interface ICreateUserResDto {
-  id: number;
-  signInType: SignInTypes;
-  isActive: boolean;
-  name: string;
-  phone: string;
-  workspace?: Workspace;
-}
+export type ICreateUserResDto = Omit<User, 'password'>;
 
 const resDtoSwagger: Record<keyof ICreateUserResDto, any> = {
   id: {
@@ -82,6 +77,7 @@ const resDtoSwagger: Record<keyof ICreateUserResDto, any> = {
     example: 'true',
     description: 'boolean타입의 현재 사용가능한 회원 여부',
   },
+  userId: reqDtoSwagger.userId,
   name: reqDtoSwagger.name,
   phone: reqDtoSwagger.phone,
   signInType: reqDtoSwagger.signInType,
@@ -92,6 +88,11 @@ export class CreateUserResDto implements ICreateUserResDto {
   @IsNotEmpty()
   @IsNumber()
   id: number;
+
+  @ApiProperty(resDtoSwagger.userId)
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
 
   @ApiProperty(resDtoSwagger.name)
   @IsNotEmpty()

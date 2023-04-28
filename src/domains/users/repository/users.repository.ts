@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 
 import { CreateUserReqDto } from '../dtos/createUser.dto';
 import { User } from '../entities/user.entity';
@@ -31,7 +31,15 @@ export class UsersRepository {
     }
   }
 
-  async find() {
+  async find(where: FindOneOptions<User>['where']) {
+    try {
+      const user = await this.usersRepository.findOne({ where });
+
+      return user;
+    } catch (err) {
+      this.handleError(err);
+    }
+
     //
   }
 

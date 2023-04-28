@@ -9,4 +9,7 @@ export class AuthDbConfig {
 
   @IsNumber()
   SESSION_TTL: number;
+
+  @IsString()
+  USER_PASSWORD_SALT: string;
 }

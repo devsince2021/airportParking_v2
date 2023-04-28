@@ -33,6 +33,10 @@ const userSwagger: Record<keyof User, any> = {
     example: '01011111111',
     description: '-없는 11자리 전화번호',
   },
+  userId: {
+    example: 'ha123',
+    description: '로그인에 사용되는 id',
+  },
   signInType: {
     enum: SignInTypes,
     enumName: '회원가입 종류',
@@ -48,7 +52,7 @@ const userSwagger: Record<keyof User, any> = {
 };
 
 @Entity('user')
-@Unique(['phone'])
+@Unique(['userId'])
 export class User {
   @ApiProperty(userSwagger.id)
   @PrimaryGeneratedColumn()
@@ -72,6 +76,10 @@ export class User {
   @ApiProperty(userSwagger.phone)
   @Column()
   phone: string;
+
+  @ApiProperty(userSwagger.userId)
+  @Column()
+  userId: string;
 
   @ApiProperty(userSwagger.password)
   @Column()
