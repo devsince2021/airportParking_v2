@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 
@@ -73,6 +74,9 @@ export class Loader {
         saveUninitialized: false,
       }),
     );
+
+    this.app.use(passport.initialize());
+    this.app.use(passport.session());
 
     return this;
   }
