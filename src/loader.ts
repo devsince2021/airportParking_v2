@@ -8,6 +8,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import { GlobalExceptionFilter } from './exception.filter';
 
 export class Loader {
   private app: NestExpressApplication;
@@ -28,7 +29,7 @@ export class Loader {
     this.app.useStaticAssets(join(__dirname, '..', 'public'));
     this.app.setBaseViewsDir([
       join(__dirname, '..', 'src', 'domains', 'reservations', 'views'),
-      join(__dirname, '..', 'src', 'domains', 'auth', 'views'),
+      join(__dirname, '..', 'src', 'domains', 'users', 'views'),
     ]);
     this.app.setViewEngine('ejs');
 
@@ -77,6 +78,12 @@ export class Loader {
 
     this.app.use(passport.initialize());
     this.app.use(passport.session());
+
+    return this;
+  }
+
+  setGlobalExceptionFilter() {
+    this.app.useGlobalFilters(new GlobalExceptionFilter());
 
     return this;
   }
