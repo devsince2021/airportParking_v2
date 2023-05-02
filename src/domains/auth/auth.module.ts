@@ -7,7 +7,6 @@ import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
 
 import { NaverService } from './services/naver.service';
-import { AuthViewController } from './controllers/auth.viewController';
 import { LocalStrategy } from './services/passport.localStrategy';
 import { SessionSerializer } from './services/passport.sessionSerializer';
 import { PassportModule } from '@nestjs/passport';
@@ -20,6 +19,6 @@ import { PassportModule } from '@nestjs/passport';
     UsersModule,
   ],
   providers: [AuthService, NaverService, LocalStrategy, SessionSerializer],
-  controllers: [AuthController, AuthViewController],
+  controllers: [AuthController],
 })
 export class AuthModule {}

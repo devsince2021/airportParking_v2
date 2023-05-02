@@ -9,7 +9,7 @@ form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const res = await requestLogin(event);
-  console.log(res);
+  alert('res', res);
 });
 
 const requestLogin = async (event) => {
@@ -29,8 +29,8 @@ const requestLogin = async (event) => {
 };
 
 const createBody = (event) => {
-  const id = event.target[idInput.name]?.value ?? '';
+  const userId = event.target[idInput.name]?.value ?? '';
   const password = event.target[pwInput.name]?.value ?? '';
 
-  return { id, password };
+  return { userId, password };
 };

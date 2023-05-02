@@ -35,6 +35,7 @@ export class UsersController {
     };
   }
 
+  // pipe 추가
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   async login(@Request() req) {

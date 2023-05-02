@@ -73,7 +73,7 @@ export class AppModule implements NestModule {
     consumer
       .apply(CorsMiddleware)
       .forRoutes(
-        { path: '/api/auth', method: RequestMethod.POST },
+        { path: '/api/users/*', method: RequestMethod.POST },
         { path: '/api/reservation', method: RequestMethod.POST },
       );
   }

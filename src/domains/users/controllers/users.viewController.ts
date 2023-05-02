@@ -1,21 +1,21 @@
 import { Controller, Get, Render } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 
 import { TAG } from './swaggerDefine';
-import { ConfigService } from '@nestjs/config';
 
 @ApiTags(TAG)
-@Controller('auth')
-export class AuthViewController {
+@Controller('users')
+export class UsersViewController {
   constructor(private readonly configService: ConfigService) {}
 
-  @Get('login')
+  @Get('/login')
   @Render('login.ejs')
   async showLoginView() {
     const baseUrl = this.configService.get('API_URL');
 
     return {
-      url: `${baseUrl}/auth/login`,
+      url: `${baseUrl}/users/login`,
     };
   }
 }

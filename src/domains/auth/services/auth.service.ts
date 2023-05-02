@@ -56,7 +56,6 @@ export class AuthService {
 
   async validateLocalLogin(userId: string, userPassword: string) {
     const user = await this.usersRepository.find({ userId });
-
     if (_.isNil(user)) {
       throw new BadRequestError({
         message: Auth_Service_Msg.S_LOGIN_ID,
