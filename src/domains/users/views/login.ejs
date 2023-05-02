@@ -4,20 +4,30 @@
     <meta charset="utf-8" />
     <title>로그인</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- <link rel="stylesheet" href="../css/dailychart.css" /> -->
-    <script type="module" src="../js/login.js" defer></script>
   </head>
   <body>
     <header>로그인</header>
     <div class="container">
       <div class="formContainer">
-        <div id="form__url__secret"><%= url %></div>
-        <form id="form__login">
-          <input id="form__id" placeholder="id" name="id" />
-          <input id="form__password" placeholder="pw" name="password" />
+        <form action="/users/login" method="post" id="form__login">
+          <input
+            id="form__id"
+            placeholder="id"
+            name="userId"
+            value="<%= id %>"
+          />
+          <input
+            id="form__password"
+            placeholder="pw"
+            name="password"
+            value="<%= password %>"
+          />
           <button type="submit">hi</button>
         </form>
       </div>
     </div>
+    <script>
+      alert('<%= message %>');
+    </script>
   </body>
 </html>

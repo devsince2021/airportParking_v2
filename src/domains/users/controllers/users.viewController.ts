@@ -1,8 +1,17 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Render,
+  Request,
+  Response,
+  UseGuards,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 
 import { TAG } from './swaggerDefine';
+import { LocalAuthGuard } from 'src/domains/auth/guards/localAuth.guard';
 
 @ApiTags(TAG)
 @Controller('users')
@@ -12,10 +21,26 @@ export class UsersViewController {
   @Get('/login')
   @Render('login.ejs')
   async showLoginView() {
-    const baseUrl = this.configService.get('API_URL');
+    return {
+      id: '',
+      password: '',
+      message: '',
+    };
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('/login')
+  @Render('login.ejs')
+  async showLoginResult(@Request() req, @Response() res) {
+    const { isSuccess, message } = res.locals;
+    const { userId, password } = req.body;
+
+    if (isSuccess) return res.redirect('/');
 
     return {
-      url: `${baseUrl}/users/login`,
+      id: userId,
+      password,
+      message,
     };
   }
 }

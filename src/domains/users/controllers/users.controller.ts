@@ -35,15 +35,19 @@ export class UsersController {
     };
   }
 
-  // pipe 추가
-  @UseGuards(LocalAuthGuard)
-  @Post('/login')
-  async login(@Request() req) {
-    return {
-      isSuccess: true,
-      data: req.user,
-    };
-  }
+  // // pipe 추가
+  // @UseGuards(LocalAuthGuard)
+  // @Post('/login')
+  // async login(@Request() req) {
+  //   try {
+  //     return {
+  //       isSuccess: true,
+  //       data: req.user,
+  //     };
+  //   } catch (err) {
+  //     console.log(err, '22');
+  //   }
+  // }
 
   @Get('/logout')
   async logout(@Request() req) {
