@@ -23,6 +23,7 @@ import { Workspace, WorkspaceMembership } from './domains/workspace';
 import { Membership } from './domains/membership';
 import { Reservation, ReservationModule } from './domains/reservations';
 import { CorsMiddleware } from './cors.middleware';
+import { AppViewController } from './app.controller';
 
 @Module({
   imports: [
@@ -66,7 +67,7 @@ import { CorsMiddleware } from './cors.middleware';
     CompanyModule,
   ],
 
-  controllers: [],
+  controllers: [AppViewController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

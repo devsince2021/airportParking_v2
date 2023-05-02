@@ -30,6 +30,7 @@ export class Loader {
     this.app.setBaseViewsDir([
       join(__dirname, '..', 'src', 'domains', 'reservations', 'views'),
       join(__dirname, '..', 'src', 'domains', 'users', 'views'),
+      join(__dirname, '..', 'src', 'views'),
     ]);
     this.app.setViewEngine('ejs');
 
