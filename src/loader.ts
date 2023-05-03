@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import expressLayouts from 'express-ejs-layouts';
 import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
@@ -32,7 +33,16 @@ export class Loader {
       join(__dirname, '..', 'src', 'domains', 'users', 'views'),
       join(__dirname, '..', 'src', 'views'),
     ]);
+
     this.app.setViewEngine('ejs');
+    this.app.use(
+      '/',
+      (req, res, next) => {
+        res.locals.frame = true;
+        next();
+      },
+      expressLayouts,
+    );
 
     return this;
   }

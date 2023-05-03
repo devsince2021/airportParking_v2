@@ -22,6 +22,7 @@ export class UsersViewController {
   @Render('login.ejs')
   async showLoginView() {
     return {
+      frame: false,
       id: '',
       password: '',
       message: '',
@@ -38,6 +39,7 @@ export class UsersViewController {
     if (isSuccess) return res.redirect('/');
 
     return {
+      frame: false,
       id: userId,
       password,
       message,
