@@ -3,14 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindOneOptions } from 'typeorm';
 import _ from 'lodash';
 
-import { BadRequestError } from '../../../utils/customException';
+import { BadRequestError } from '../../utils/customException';
 
-import { Company } from '../entities/company.entity';
-import { ICreateCompanyReqDto } from '../dtos/createCompany.dto';
+import { Company } from './company.entity';
+import { ICreateCompanyReqDto } from './dtos/company.createCompany.dto';
 import {
   Company_Repository_Code,
   Company_Repository_Msg,
-} from '../constants/errorCode';
+} from './defines/company.errorCode';
 
 @Injectable()
 export class CompanyRepository {

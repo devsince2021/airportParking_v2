@@ -7,7 +7,7 @@ import {
   IsOptional,
   IsBoolean,
 } from 'class-validator';
-import { Company } from '../entities/company.entity';
+import { Company } from '../company.entity';
 
 export interface ICreateCompanyReqDto {
   registrationNumber: string;

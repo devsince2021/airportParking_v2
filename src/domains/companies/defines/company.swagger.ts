@@ -1,7 +1,7 @@
 // import { SendVerifyCodeResDto } from '../dtos/auth.sendVerifyCodeDto';
 // import { VerifyCodeResDto } from '../dtos/auth.verifyCodeDto';
 
-import { CreateCompanyResDto } from '../dtos/createCompany.dto';
+import { CreateCompanyResDto } from '../dtos/company.createCompany.dto';
 
 export const TAG = 'Company';
 

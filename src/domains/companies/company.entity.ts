@@ -8,7 +8,7 @@ import {
   Unique,
 } from 'typeorm';
 
-import { Reservation } from '../../reservations';
+import { Reservation } from '../reservations';
 import { User } from 'src/domains/users';
 
 const companySwagger: Record<keyof Company, any> = {

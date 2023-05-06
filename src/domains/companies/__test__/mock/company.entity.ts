@@ -1,4 +1,4 @@
-import { Company } from '../../entities/company.entity';
+import { Company } from '../../company.entity';
 
 export const mockCompany = (): Company => {
   return {

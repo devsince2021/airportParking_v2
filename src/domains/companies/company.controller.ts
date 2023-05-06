@@ -1,11 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { BadRequestError } from '../../../utils/customException';
-import { CompanyService } from '../services/company.service';
+import { BadRequestError } from '../../utils/customException';
+import { CompanyService } from './company.service';
 
-import { OPERATION, RESPONSE, TAG } from './swaggerDefine';
-import { CreateCompanyReqDto } from '../dtos/createCompany.dto';
+import { OPERATION, RESPONSE, TAG } from './defines/company.swagger';
+import { CreateCompanyReqDto } from './dtos/company.createCompany.dto';
 
 @ApiTags(TAG)
 @Controller('company')

@@ -1,7 +1,7 @@
 import {
   ICreateCompanyReqDto,
   ICreateCompanyResDto,
-} from '../../dtos/createCompany.dto';
+} from '../../dtos/company.createCompany.dto';
 
 const REG_NUMBER = '02-0000-000007';
 const ID = 7;
