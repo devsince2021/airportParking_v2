@@ -19,9 +19,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import _ from 'lodash';
 
 import { LocalAuthGuard } from 'src/domains/auth/guards/localAuth.guard';
+import { CompanyGuard } from 'src/domains/auth/guards/company.guard';
+import { AuthenticatedGuard } from 'src/domains/auth/guards/authenticated.guard';
 import { FileValidationPipe } from 'src/utils/fileValidation.pipe';
 import { ReservationsService } from 'src/domains/reservations/reservations.service';
-import { AuthenticatedGuard } from 'src/domains/auth/guards/authenticated.guard';
 
 @Controller()
 export class AppViewController {
@@ -40,14 +41,14 @@ export class AppViewController {
     };
   }
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, CompanyGuard)
   @Get()
   async showDashboard(@Response() res) {
     return res.redirect('/reservation');
   }
 
   // 예약 관리
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, CompanyGuard)
   @Get('/reservation')
   @Render('reservation.ejs')
   async showRegistration(@Query('isSuccess') isSuccess) {
@@ -61,7 +62,7 @@ export class AppViewController {
     };
   }
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, CompanyGuard)
   @Post('/reservation')
   @UseInterceptors(FileInterceptor('excel'))
   async createReservation(

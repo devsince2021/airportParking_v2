@@ -5,7 +5,6 @@ import {
   IsEnum,
   IsNumber,
   IsOptional,
-  isNotIn,
 } from 'class-validator';
 
 import { SignInTypes, User } from '../user.entity';
@@ -71,10 +70,11 @@ export class CreateUserReqDto implements ICreateUserReqDto {
   signInType: SignInTypes;
 
   @IsNumber()
+  @IsOptional()
   companyId: number;
 
   @ApiProperty(reqDtoSwagger.company)
-  company: any;
+  company?: Company;
 }
 
 export type ICreateUserResDto = Omit<User, 'password'>;
@@ -127,8 +127,10 @@ export class CreateUserResDto implements ICreateUserResDto {
   @IsNumber()
   isActive: boolean;
 
+  @IsOptional()
+  @IsNumber()
   companyId: number;
 
   @ApiProperty(reqDtoSwagger.company)
-  company: any;
+  company?: Company;
 }
