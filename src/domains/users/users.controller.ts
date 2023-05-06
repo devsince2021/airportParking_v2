@@ -9,13 +9,13 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { CreateUserReqDto } from '../dtos/createUser.dto';
-import { UsersService } from '../services/users.service';
-import { CreateUserPipe } from '../pipes/createUser.pipe';
-import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
-import { LocalAuthGuard } from '../../auth/guards/localAuth.guard';
+import { CreateUserReqDto } from './dtos/users.createUser.dto';
+import { UsersService } from './users.service';
+import { CreateUserPipe } from './users.createUser.pipe';
+import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
+import { LocalAuthGuard } from '../auth/guards/localAuth.guard';
 
-import { TAG, OPERATION, RESPONSE } from './swaggerDefine';
+import { TAG, OPERATION, RESPONSE } from './defines/users.swagger';
 
 @ApiTags(TAG)
 @Controller('api/users')

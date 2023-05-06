@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 
-import { UsersController } from '../controllers/users.controller';
-import { UsersService } from '../services/users.service';
+import { UsersController } from '../users.controller';
+import { UsersService } from '../users.service';
 
 import {
   mockValidCreateUserReqDto,

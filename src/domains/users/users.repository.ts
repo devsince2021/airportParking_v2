@@ -2,8 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 
-import { CreateUserReqDto } from '../dtos/createUser.dto';
-import { User } from '../entities/user.entity';
+import { CreateUserReqDto } from './dtos/users.createUser.dto';
+import { User } from './user.entity';
 
 const errorMessageTable = {
   ER_DUP_ENTRY: '중복된 전화번호 입니다. 다시 확인해주세요.',

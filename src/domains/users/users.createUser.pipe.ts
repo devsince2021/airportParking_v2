@@ -8,7 +8,10 @@ import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import _ from 'lodash';
 
-import { CreateUserReqDto, ICreateUserReqDto } from '../dtos/createUser.dto';
+import {
+  CreateUserReqDto,
+  ICreateUserReqDto,
+} from './dtos/users.createUser.dto';
 
 const errorMessages: Record<keyof ICreateUserReqDto | 'default', string> = {
   name: '이름을 잘못 입력하였습니다. 이름을 다시 확인해주세요.',

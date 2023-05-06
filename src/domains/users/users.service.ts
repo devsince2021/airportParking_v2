@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 
-import { CreateUserReqDto } from '../dtos/createUser.dto';
-import { UsersRepository } from '../repository/users.repository';
+import { CreateUserReqDto } from './dtos/users.createUser.dto';
+import { UsersRepository } from './users.repository';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()

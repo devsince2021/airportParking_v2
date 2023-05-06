@@ -1,8 +1,8 @@
 import {
   ICreateUserReqDto,
   ICreateUserResDto,
-} from '../../dtos/createUser.dto';
-import { SignInTypes } from '../../entities/user.entity';
+} from '../../dtos/users.createUser.dto';
+import { SignInTypes } from '../../user.entity';
 
 export const mockValidCreateUserReqDto = (): ICreateUserReqDto => {
   return {

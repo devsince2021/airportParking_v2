@@ -1,3 +1,3 @@
 export { UsersModule } from './users.module';
-export { UsersController } from './controllers/users.controller';
-export { User } from './entities/user.entity';
+export { UsersController } from './users.controller';
+export { User } from './user.entity';

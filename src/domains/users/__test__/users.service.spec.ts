@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { UsersService } from '../services/users.service';
-import { UsersRepository } from '../repository/users.repository';
+import { UsersService } from '../users.service';
+import { UsersRepository } from '../users.repository';
 
 import {
   mockValidCreateUserReqDto,
