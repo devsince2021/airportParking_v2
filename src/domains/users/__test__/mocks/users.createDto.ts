@@ -9,7 +9,7 @@ export const mockValidCreateUserReqDto = (): ICreateUserReqDto => {
     password: '123',
     name: '김아무개',
     phone: '01011111111',
-    signInType: SignInTypes.Phone,
+    signInType: SignInTypes.UserId,
     userId: 'awepf2',
   };
 };
@@ -19,14 +19,14 @@ export const mockInvalidCreateUserReqDto = () => {
     password: '123',
     name: '김아무개',
     // phone: '01011111111',
-    signInType: SignInTypes.Phone,
+    signInType: SignInTypes.UserId,
   } as ICreateUserReqDto;
 };
 
 export const mockValidCreateUserResDto = (): ICreateUserResDto => {
   return {
     id: 1,
-    signInType: SignInTypes.Phone,
+    signInType: SignInTypes.UserId,
     isActive: true,
     name: '김아무개',
     phone: '01011111111',
@@ -37,7 +37,7 @@ export const mockValidCreateUserResDto = (): ICreateUserResDto => {
 export const mockInvalidCreateUserResDto = () => {
   return {
     id: 1,
-    signInType: SignInTypes.Phone,
+    signInType: SignInTypes.UserId,
     isActive: true,
     name: '김아무개',
     phone: '01097182118',

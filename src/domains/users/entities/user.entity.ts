@@ -13,8 +13,8 @@ import { Workspace } from '../../workspace';
 import { IsOptional } from 'class-validator';
 
 export enum SignInTypes {
-  Phone = 'P',
   Kakao = 'KA',
+  UserId = 'I',
 }
 
 const userSwagger: Record<keyof User, any> = {

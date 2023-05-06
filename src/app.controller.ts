@@ -10,6 +10,6 @@ export class AppViewController {
   @UseGuards(AuthenticatedGuard)
   @Render('dashboard.ejs')
   async showDashBoard() {
-    return { url: 'h' };
+    return { title: '대시보드' };
   }
 }

@@ -36,7 +36,9 @@ export class UsersViewController {
     const { isSuccess, message } = res.locals;
     const { userId, password } = req.body;
 
-    if (isSuccess) return res.redirect('/');
+    if (isSuccess) {
+      return res.redirect('/');
+    }
 
     return {
       frame: false,

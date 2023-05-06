@@ -1,9 +1,10 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
-  Query,
   Render,
+  Request,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -12,38 +13,44 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FileValidationPipe } from '../pipes/FileValidation.pipe';
 import { ReservationsService } from '../services/reservations.service';
 
-@Controller('api/reservations')
-export class ReservationsController {
+@Controller('reservations')
+export class ReservationsViewController {
   constructor(
-    private configService: ConfigService,
+    private readonly configService: ConfigService,
     private reservationService: ReservationsService,
   ) {}
 
-  // todo: view와 api가 구분 되어야하지 않을까.
-  @Get('/registration')
+  @Get()
   @Render('registration.ejs')
   async showRegistration() {
-    const baseUrl = this.configService.get('API_URL');
     const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
 
     return {
-      url: `${baseUrl}/reservations`,
+      title: '예약',
       uploadKey,
+      isSuccess: undefined,
     };
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('excel')) // todo: 'excel'을 RESERVATION_UPLOAD_KEY로 대체
+  @Render('registration.ejs')
+  @UseInterceptors(FileInterceptor('excel'))
   async createReservation(
-    @Query('date') date: string,
-    @UploadedFile(new FileValidationPipe())
-    file: Express.Multer.File,
+    @UploadedFile(new FileValidationPipe()) file,
+    @Body('date') date,
+    @Request() req,
   ) {
+    console.log('req', req);
+    const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
     const isSuccess = await this.reservationService.createReservation(
       date,
       file,
     );
 
-    return { isSuccess };
+    return {
+      title: '예약',
+      uploadKey,
+      isSuccess,
+    };
   }
 }
