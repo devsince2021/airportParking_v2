@@ -3,8 +3,6 @@ import {
   Get,
   Render,
   UseGuards,
-  Request,
-  Response,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -12,7 +10,7 @@ import {
   Query,
   Session,
   Res,
-  Param,
+  Req,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -36,14 +34,13 @@ export class AppViewController {
   @Render('company.ejs')
   async showCompanyReg() {
     return {
-      frame: false,
       title: '회사등록필요',
     };
   }
 
   @UseGuards(AuthenticatedGuard, CompanyGuard)
   @Get()
-  async showDashboard(@Response() res) {
+  async showDashboard(@Res() res) {
     return res.redirect('/reservation');
   }
 
@@ -55,8 +52,6 @@ export class AppViewController {
     const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
 
     return {
-      frame: false,
-      title: '예약',
       uploadKey,
       isSuccess,
     };
@@ -96,10 +91,19 @@ export class AppViewController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async showLoginResult(@Response() res) {
+  async login(@Res() res) {
     const isFail = res.locals.isFailLogin;
     const destination = isFail ? '/login?isSuccess=false' : '/';
 
     return res.redirect(destination);
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('/logout')
+  async logout(@Req() req, @Res() res) {
+    req.logout(function (err) {
+      if (err) throw err;
+      res.redirect('/login');
+    });
   }
 }
