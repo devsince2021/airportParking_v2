@@ -11,13 +11,12 @@ export class LocalAuthGuard extends AuthGuard('local') {
     try {
       const result = (await super.canActivate(context)) as boolean;
       await super.logIn(request);
-      response.locals.isSuccess = true;
 
       return result;
     } catch (err) {
       if (err instanceof BadRequestError) {
-        response.locals.isSuccess = false;
-        response.locals.message = '로그인에 실패하였습니다.';
+        response.locals.isFailLogin = true;
+
         return true;
       }
 

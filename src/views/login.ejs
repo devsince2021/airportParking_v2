@@ -23,17 +23,17 @@
         id="form__id"
         placeholder="아이디를 입력해주세요"
         name="userId"
-        value="<%= id %>"
       />
       <input
         class="mb-5 rounded p-3"
         id="form__password"
         placeholder="비밀번호를 입력해주세요"
         name="password"
-        value="<%= password %>"
       />
       <% if (message) { %>
-      <div class="text-lg pb-10 text-red-500 self-center"><%= message %></div>
+      <div id="fail__message" class="text-lg pb-10 text-red-500 self-center">
+        <%= message %>
+      </div>
       <% } else { %>
       <div class="mb-5"></div>
       <% } %>
@@ -43,4 +43,16 @@
       </button>
     </form>
   </div>
+  <script>
+    const idInput = document.getElementById('form__id');
+    const pwInput = document.getElementById('form__password');
+    const message = document.getElementById('fail__message');
+
+    const deleteMessage = () => {
+      if (message.innerText) message.innerText = '';
+    };
+
+    idInput.addEventListener('change', deleteMessage);
+    pwInput.addEventListener('change', deleteMessage);
+  </script>
 </body>

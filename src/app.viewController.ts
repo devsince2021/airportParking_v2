@@ -9,21 +9,44 @@ import {
   UploadedFile,
   UseInterceptors,
   Body,
+  Query,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthenticatedGuard } from './domains/auth/guards/authenticated.guard';
-import { LocalAuthGuard } from 'src/domains/auth/guards/localAuth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import _ from 'lodash';
+
+import { LocalAuthGuard } from 'src/domains/auth/guards/localAuth.guard';
 import { FileValidationPipe } from 'src/domains/reservations/pipes/FileValidation.pipe';
 import { ReservationsService } from 'src/domains/reservations/services/reservations.service';
+import { AuthenticatedGuard } from 'src/domains/auth/guards/authenticated.guard';
+import { CompanyGuard } from './domains/auth/guards/company.guard';
 
 @Controller()
 export class AppViewController {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly reservationService: ReservationsService,
+  ) {}
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('/company')
+  @Render('company.ejs')
+  async showCompanyReg() {
+    return {
+      frame: false,
+      title: '회사등록필요',
+    };
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get()
+  async showDashboard(@Response() res) {
+    return res.redirect('/reservation');
+  }
 
   // 예약 관리
   @UseGuards(AuthenticatedGuard)
-  @Get()
+  @Get('/reservation')
   @Render('registration.ejs')
   async showRegistration() {
     const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
@@ -36,56 +59,47 @@ export class AppViewController {
     };
   }
 
-  // @Post()
-  // @Render('registration.ejs')
-  // @UseInterceptors(FileInterceptor('excel'))
-  // async createReservation(
-  //   @UploadedFile(new FileValidationPipe()) file,
-  //   @Body('date') date,
-  //   @Request() req,
-  // ) {
-  //   console.log('req', req);
-  //   const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
-  //   const isSuccess = await this.reservationService.createReservation(
-  //     date,
-  //     file,
-  //   );
+  @UseGuards(AuthenticatedGuard)
+  @Post('/reservation')
+  @Render('registration.ejs')
+  @UseInterceptors(FileInterceptor('excel'))
+  async createReservation(
+    @UploadedFile(new FileValidationPipe()) file,
+    @Body('date') date,
+    @Request() req,
+  ) {
+    const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
+    // const isSuccess = await this.reservationService.createReservation(
+    //   date,
+    //   file,
+    // );
 
-  //   return {
-  //     title: '예약',
-  //     uploadKey,
-  //     isSuccess,
-  //   };
-  // }
+    return {
+      frame: false,
+      title: '예약',
+      uploadKey,
+      isSuccess: true,
+    };
+  }
 
   // 로그인
   @Get('/login')
   @Render('login.ejs')
-  async showLoginView() {
+  async showLoginView(@Query('isSuccess') isSuccess) {
+    const message = isSuccess === 'false' ? '로그인에 실패하였습니다.' : '';
+
     return {
       frame: false,
-      id: '',
-      password: '',
-      message: '',
+      message,
     };
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  @Render('login.ejs')
-  async showLoginResult(@Request() req, @Response() res) {
-    const { isSuccess, message } = res.locals;
-    const { userId, password } = req.body;
+  async showLoginResult(@Response() res) {
+    const isFail = res.locals.isFailLogin;
+    const destination = isFail ? '/login?isSuccess=false' : '/';
 
-    if (isSuccess) {
-      return res.redirect('/');
-    }
-
-    return {
-      frame: false,
-      id: userId,
-      password,
-      message,
-    };
+    return res.redirect(destination);
   }
 }
