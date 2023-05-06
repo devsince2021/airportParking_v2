@@ -11,6 +11,7 @@ export const mockValidCreateUserReqDto = (): ICreateUserReqDto => {
     phone: '01011111111',
     signInType: SignInTypes.UserId,
     userId: 'awepf2',
+    company: '1',
   };
 };
 
@@ -31,6 +32,7 @@ export const mockValidCreateUserResDto = (): ICreateUserResDto => {
     name: '김아무개',
     phone: '01011111111',
     userId: 'awepf2',
+    company: '1',
   };
 };
 
