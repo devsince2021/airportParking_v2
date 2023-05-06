@@ -21,7 +21,7 @@ export enum ServiceType {
   Out = 'O',
 }
 
-const reservationSwagger: Record<keyof Reservation, any> = {
+const reservationSwagger: Record<keyof Omit<Reservation, 'company'>, any> = {
   id: {
     example: 1,
   },
@@ -65,9 +65,9 @@ const reservationSwagger: Record<keyof Reservation, any> = {
     example: '2020-02-20',
     description: '예약일',
   },
-  company: {
-    example: '김포주차1',
-    description: '업체명', // 1개의 사장님이 복수개의 회사를 가지고 있는 경우가 있다.
+  companyId: {
+    example: '1',
+    description: '회사 고유 id',
   },
 };
 
@@ -120,7 +120,10 @@ export class Reservation {
   @Column()
   listDate: string;
 
-  @ApiProperty(reservationSwagger.company)
+  @ApiProperty(reservationSwagger.companyId)
+  @Column({ nullable: true })
+  companyId: number;
+
   @ManyToOne(() => Company, (c) => c.reservation)
   company?: Company;
 }

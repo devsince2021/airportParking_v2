@@ -1,6 +1,6 @@
 import { Reservation, ServiceType } from '../../reservations.entity';
 
-export const mockReservation = (): Reservation => {
+export const mockReservation = (): Omit<Reservation, 'company'> => {
   return {
     id: 1,
     serviceType: ServiceType.In,
@@ -13,7 +13,7 @@ export const mockReservation = (): Reservation => {
     serviceEndDate: '08',
     serviceTime: '07:30',
     listDate: '2022-02-22',
-    // company: [],
+    companyId: 1,
   };
 };
 

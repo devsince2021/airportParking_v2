@@ -70,6 +70,7 @@ export class CreateUserReqDto implements ICreateUserReqDto {
   @IsEnum(SignInTypes ?? {})
   signInType: SignInTypes;
 
+  @IsNumber()
   companyId: number;
 
   @ApiProperty(reqDtoSwagger.company)

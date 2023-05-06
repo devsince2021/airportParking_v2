@@ -10,16 +10,18 @@ import {
   UseInterceptors,
   Body,
   Query,
+  Session,
+  Res,
+  Param,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
 import _ from 'lodash';
 
 import { LocalAuthGuard } from 'src/domains/auth/guards/localAuth.guard';
-import { FileValidationPipe } from 'src/domains/reservations/pipes/FileValidation.pipe';
-import { ReservationsService } from 'src/domains/reservations/services/reservations.service';
+import { FileValidationPipe } from 'src/utils/fileValidation.pipe';
+import { ReservationsService } from 'src/domains/reservations/reservations.service';
 import { AuthenticatedGuard } from 'src/domains/auth/guards/authenticated.guard';
-import { CompanyGuard } from './domains/auth/guards/company.guard';
 
 @Controller()
 export class AppViewController {
@@ -47,39 +49,36 @@ export class AppViewController {
   // 예약 관리
   @UseGuards(AuthenticatedGuard)
   @Get('/reservation')
-  @Render('registration.ejs')
-  async showRegistration() {
+  @Render('reservation.ejs')
+  async showRegistration(@Query('isSuccess') isSuccess) {
     const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
 
     return {
       frame: false,
       title: '예약',
       uploadKey,
-      isSuccess: undefined,
+      isSuccess,
     };
   }
 
   @UseGuards(AuthenticatedGuard)
   @Post('/reservation')
-  @Render('registration.ejs')
   @UseInterceptors(FileInterceptor('excel'))
   async createReservation(
     @UploadedFile(new FileValidationPipe()) file,
     @Body('date') date,
-    @Request() req,
+    @Session() session,
+    @Res() res,
   ) {
-    const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
-    // const isSuccess = await this.reservationService.createReservation(
-    //   date,
-    //   file,
-    // );
+    const companyId = _.get(session, ['passport', 'user', 'companyId'], null);
 
-    return {
-      frame: false,
-      title: '예약',
-      uploadKey,
-      isSuccess: true,
-    };
+    const isSuccess = await this.reservationService.createReservation({
+      date,
+      file,
+      companyId,
+    });
+
+    return res.redirect(`/reservation?isSuccess=${isSuccess}`);
   }
 
   // 로그인

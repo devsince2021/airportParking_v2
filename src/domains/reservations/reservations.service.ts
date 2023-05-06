@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import { ReservationRepository } from './reservation.repository';
 import { ReservationsParseService } from './reservations.parse_service';
+import { ICreateReservationDto } from './dtos/reservation.create_reservation.dto';
 
 @Injectable()
 export class ReservationsService {
@@ -11,8 +12,8 @@ export class ReservationsService {
     private reservationRepository: ReservationRepository,
   ) {}
 
-  async createReservation(date: string, file: Express.Multer.File) {
-    const rows = this.parseService.parse([file], date);
+  async createReservation({ file, date, companyId }: ICreateReservationDto) {
+    const rows = this.parseService.parse([file], date, companyId);
 
     if (!_.isEmpty(rows)) {
       await this.reservationRepository.bulkUpsert(date, rows);

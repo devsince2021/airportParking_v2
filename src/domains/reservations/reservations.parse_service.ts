@@ -20,13 +20,15 @@ export class ReservationsParseService {
     this.FILE_UPLOAD_KEY = this.configService.get('RESERVATION_UPLOAD_KEY');
   }
 
-  parse(files: Express.Multer.File[], listDate: string) {
+  parse(files: Express.Multer.File[], listDate: string, companyId: number) {
     if (_.isNil(files) || _.isEmpty(files)) return [];
 
     try {
       if (Array.isArray(files)) {
         const parsedRows = this.getRowsFromExcelFile(files);
-        const dbRows = parsedRows.map(this.convertToDBFormat(listDate));
+        const dbRows = parsedRows.map(
+          this.convertToDBFormat(listDate, companyId),
+        );
 
         return dbRows;
       }
@@ -38,7 +40,7 @@ export class ReservationsParseService {
     }
   }
 
-  private convertToDBFormat(listDate: string) {
+  private convertToDBFormat(listDate: string, companyId: number) {
     return (rows: string[]): Omit<Reservation, 'id'> => {
       const serviceCharge = this.chargeStringToNumber(rows[6]);
       const serviceType =
@@ -55,7 +57,7 @@ export class ReservationsParseService {
         note: rows[8] || '',
         serviceEndDate: rows[9] || '',
         listDate: listDate || '',
-        // companies: [],
+        companyId,
       };
     };
   }
