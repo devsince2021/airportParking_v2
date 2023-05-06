@@ -21,13 +21,43 @@ import { ReservationsService } from 'src/domains/reservations/services/reservati
 export class AppViewController {
   constructor(private readonly configService: ConfigService) {}
 
-  @Get()
+  // 예약 관리
   @UseGuards(AuthenticatedGuard)
-  @Render('dashboard.ejs')
-  async showDashBoard() {
-    return { title: '대시보드' };
+  @Get()
+  @Render('registration.ejs')
+  async showRegistration() {
+    const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
+
+    return {
+      title: '예약',
+      uploadKey,
+      isSuccess: undefined,
+    };
   }
 
+  // @Post()
+  // @Render('registration.ejs')
+  // @UseInterceptors(FileInterceptor('excel'))
+  // async createReservation(
+  //   @UploadedFile(new FileValidationPipe()) file,
+  //   @Body('date') date,
+  //   @Request() req,
+  // ) {
+  //   console.log('req', req);
+  //   const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
+  //   const isSuccess = await this.reservationService.createReservation(
+  //     date,
+  //     file,
+  //   );
+
+  //   return {
+  //     title: '예약',
+  //     uploadKey,
+  //     isSuccess,
+  //   };
+  // }
+
+  // 로그인
   @Get('/login')
   @Render('login.ejs')
   async showLoginView() {
@@ -55,40 +85,6 @@ export class AppViewController {
       id: userId,
       password,
       message,
-    };
-  }
-
-  @Get()
-  @Render('registration.ejs')
-  async showRegistration() {
-    const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
-
-    return {
-      title: '예약',
-      uploadKey,
-      isSuccess: undefined,
-    };
-  }
-
-  @Post()
-  @Render('registration.ejs')
-  @UseInterceptors(FileInterceptor('excel'))
-  async createReservation(
-    @UploadedFile(new FileValidationPipe()) file,
-    @Body('date') date,
-    @Request() req,
-  ) {
-    console.log('req', req);
-    const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
-    const isSuccess = await this.reservationService.createReservation(
-      date,
-      file,
-    );
-
-    return {
-      title: '예약',
-      uploadKey,
-      isSuccess,
     };
   }
 }

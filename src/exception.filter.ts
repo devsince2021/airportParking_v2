@@ -34,7 +34,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     if (!isLoggedIn) {
-      return this.response.status(status).redirect('/users/login');
+      return this.response.status(status).redirect('/login');
     }
 
     return this.defaultHandler(exception);
