@@ -9,7 +9,7 @@ import { TAG, OPERATION, RESPONSE } from './swaggerDefine';
 import { SmsCodePipe } from '../pipes/smsCodePipe';
 
 @ApiTags(TAG)
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

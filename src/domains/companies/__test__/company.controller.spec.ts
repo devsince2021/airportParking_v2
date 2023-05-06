@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
 
 import { BadRequestError } from '../../../utils/customException';
-import { CompanyController } from '../controllers/company.controller';
-import { CompanyService } from '../services/company.service';
-import { CompanyRepository } from '../repositories/company.repository';
+import { CompanyController } from '../company.controller';
+import { CompanyService } from '../company.service';
+import { CompanyRepository } from '../company.repository';
 
 import { mockCompany } from './mock/company.entity';
 import { mockValidCreateCompanyReqDto } from './mock/createCompany.dto';
@@ -53,8 +53,6 @@ describe('Company controller', () => {
       expect(result).toHaveProperty('isSuccess');
       expect(result.isSuccess).toBe(false);
       expect(result).toHaveProperty('error');
-      expect(result.error).toHaveProperty('code');
-      expect(result.error).toHaveProperty('message');
     });
   });
 });

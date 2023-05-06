@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 
-import { ReservationsService } from '../services/reservations.service';
-import { ReservationsParseService } from '../services/reservationsParse.service';
-import { ReservationRepository } from '../repositories/reservation.repository';
+import { ReservationsService } from '../reservations.service';
+import { ReservationsParseService } from '../reservations.parse_service';
+import { ReservationRepository } from '../reservation.repository';
 
 import { dummyFile } from './mock/dummyFile';
 import { mockReservationWithoutId } from './mock/reservation.entity';

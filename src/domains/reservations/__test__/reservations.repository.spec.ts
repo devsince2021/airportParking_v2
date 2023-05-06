@@ -3,8 +3,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 
-import { Reservation } from '../entities/reservations.entity';
-import { ReservationRepository } from '../repositories/reservation.repository';
+import { Reservation } from '../reservations.entity';
+import { ReservationRepository } from '../reservation.repository';
 
 import {
   mockReservation,

@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
-import { CompanyService } from '../services/company.service';
-import { CompanyRepository } from '../repositories/company.repository';
+import { CompanyService } from '../company.service';
+import { CompanyRepository } from '../company.repository';
 import { mockCompany } from './mock/company.entity';
 import { mockValidCreateCompanyReqDto } from './mock/createCompany.dto';
 

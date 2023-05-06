@@ -1,0 +1,60 @@
+<%- contentFor('body') %>
+<body>
+  <div class="flex flex-col h-full items-center border py-12">
+    <header class="text-purple-500 text-2xl mb-10">
+      일일 주차 목록 생성기
+    </header>
+
+    <div class="border border-gray-400 rounded-2xl p-2 mb-5">
+      <div class="text-lg my-4">
+        선택한 파일을 합쳐서 시간순으로 정리해주는 프로그램입니다.
+      </div>
+      <div class="text-lg my-4">- 작업하고 싶은 파일을 올려주세요.</div>
+      <div class="text-lg my-4">- 파일의 확장자는 .csv 이어야만 합니다.</div>
+      <div class="text-lg my-4">ex) 김포공항.csv</div>
+    </div>
+
+    <form
+      class="flex flex-col"
+      action="/reservation"
+      method="post"
+      id="form__excel"
+      enctype="multipart/form-data"
+    >
+      <input class="my-2" type="file" id="file_input" name="<%= uploadKey %>" />
+      <input class="my-2" type="date" id="date_input" name="date" />
+      <button
+        class="my-8 w-full h-12 outline-none border border-black rounded-lg bg-gray-100"
+        type="submit"
+        id="button__submit"
+      >
+        파일생성
+      </button>
+    </form>
+  </div>
+  <script>
+    const isSuccess = '<%= isSuccess %>';
+    if (isSuccess) alert('등록에 성공하였습니다.');
+
+    const button = document.getElementById('button__submit');
+    button.addEventListener('click', function (event) {
+      const fileInput = document.getElementById('file_input');
+      const dateInput = document.getElementById('date_input');
+
+      const hasFile = fileInput.files.length !== 0;
+      const hasDate = dateInput.value.length !== 0;
+
+      if (!hasDate) {
+        event.preventDefault();
+        alert('업로드 날짜를 선택해주세요');
+        return;
+      }
+
+      if (!hasFile) {
+        event.preventDefault();
+        alert('파일을 먼저 추가해주세요.');
+        return;
+      }
+    });
+  </script>
+</body>

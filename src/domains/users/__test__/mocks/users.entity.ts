@@ -1,4 +1,4 @@
-import { SignInTypes, User } from '../../entities/user.entity';
+import { SignInTypes, User } from '../../user.entity';
 
 export const mockValidUser = () => {
   return {
@@ -7,7 +7,7 @@ export const mockValidUser = () => {
     name: '김아무개',
     phone: '01011111111',
     password: '123',
-    signInType: SignInTypes.Phone,
+    signInType: SignInTypes.UserId,
   };
 };
 

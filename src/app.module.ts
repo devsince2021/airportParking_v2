@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -14,9 +19,9 @@ import {
 import { UsersModule, User } from './domains/users';
 import { Company, CompanyModule } from './domains/companies';
 import { AuthModule } from './domains/auth/auth.module';
-import { Workspace, WorkspaceMembership } from './domains/workspace';
-import { Membership } from './domains/membership';
 import { Reservation, ReservationModule } from './domains/reservations';
+import { CorsMiddleware } from './cors.middleware';
+import { AppViewController } from './app.viewController';
 
 @Module({
   imports: [
@@ -41,14 +46,7 @@ import { Reservation, ReservationModule } from './domains/reservations';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [
-            User,
-            Workspace,
-            Company,
-            WorkspaceMembership,
-            Membership,
-            Reservation,
-          ],
+          entities: [User, Company, Reservation],
           synchronize: configService.get('DB_SYNC'),
         };
       },
@@ -60,6 +58,15 @@ import { Reservation, ReservationModule } from './domains/reservations';
     CompanyModule,
   ],
 
-  controllers: [],
+  controllers: [AppViewController],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(CorsMiddleware)
+      .forRoutes(
+        { path: '/api/user', method: RequestMethod.POST },
+        { path: '/api/reservation', method: RequestMethod.POST },
+      );
+  }
+}

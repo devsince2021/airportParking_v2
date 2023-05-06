@@ -2,12 +2,12 @@ import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { BadRequestError } from '../../../utils/customException';
-import { CompanyRepository } from '../repositories/company.repository';
-import { Company } from '../entities/company.entity';
+import { CompanyRepository } from '../company.repository';
+import { Company } from '../company.entity';
 import {
   Company_Repository_Code,
   Company_Repository_Msg,
-} from '../constants/errorCode';
+} from '../defines/company.errorCode';
 
 import { mockValidCreateCompanyReqDto } from './mock/createCompany.dto';
 import { mockCompany } from './mock/company.entity';
