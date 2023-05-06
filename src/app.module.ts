@@ -19,11 +19,9 @@ import {
 import { UsersModule, User } from './domains/users';
 import { Company, CompanyModule } from './domains/companies';
 import { AuthModule } from './domains/auth/auth.module';
-import { Workspace, WorkspaceMembership } from './domains/workspace';
-import { Membership } from './domains/membership';
 import { Reservation, ReservationModule } from './domains/reservations';
 import { CorsMiddleware } from './cors.middleware';
-import { AppViewController } from './app.controller';
+import { AppViewController } from './app.viewController';
 
 @Module({
   imports: [
@@ -48,14 +46,7 @@ import { AppViewController } from './app.controller';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [
-            User,
-            Workspace,
-            Company,
-            WorkspaceMembership,
-            Membership,
-            Reservation,
-          ],
+          entities: [User, Company, Reservation],
           synchronize: configService.get('DB_SYNC'),
         };
       },
