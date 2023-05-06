@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 import { Reservation } from '../../reservations';
-import { Workspace } from '../../workspace';
+import { User } from 'src/domains/users';
 
 const companySwagger: Record<keyof Company, any> = {
   id: {
@@ -31,9 +31,9 @@ const companySwagger: Record<keyof Company, any> = {
     example: '000000000',
     description: '-가 없는 10자리 사업자등록증번호',
   },
-  workspace: {
+  staff: {
     example: '1',
-    description: '소속되어있는 워크스페이스 id',
+    description: '직원의 db id',
   },
   reservation: {
     // example: '1',
@@ -68,11 +68,11 @@ export class Company {
   @Column()
   registrationNumber: string;
 
-  @ManyToOne(() => Workspace, (w) => w.companies)
-  workspace?: Workspace;
-
   @OneToMany(() => Reservation, (r) => r.company)
   reservation?: Reservation[];
+
+  @OneToMany(() => User, (u) => u.company)
+  staff?: User[];
 
   @ApiProperty(companySwagger.isRunning)
   @Column({ default: true })

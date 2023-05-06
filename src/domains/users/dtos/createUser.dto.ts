@@ -7,10 +7,9 @@ import {
   IsOptional,
 } from 'class-validator';
 
-import { Workspace } from '../../workspace';
 import { SignInTypes, User } from '../entities/user.entity';
 
-export type ICreateUserReqDto = Omit<User, 'id' | 'isActive' | 'workspace'>;
+export type ICreateUserReqDto = Omit<User, 'id' | 'isActive'>;
 
 const reqDtoSwagger: Record<keyof ICreateUserReqDto, any> = {
   userId: {
@@ -32,6 +31,10 @@ const reqDtoSwagger: Record<keyof ICreateUserReqDto, any> = {
   signInType: {
     enum: SignInTypes,
     enumName: '회원가입 종류',
+  },
+  company: {
+    example: '1',
+    description: '회사 id',
   },
 };
 
@@ -60,6 +63,9 @@ export class CreateUserReqDto implements ICreateUserReqDto {
   @IsNotEmpty()
   @IsEnum(SignInTypes ?? {})
   signInType: SignInTypes;
+
+  @ApiProperty(reqDtoSwagger.signInType)
+  company: string;
 }
 
 export type ICreateUserResDto = Omit<User, 'password'>;
@@ -69,10 +75,6 @@ const resDtoSwagger: Record<keyof ICreateUserResDto, any> = {
     example: '1',
     description: 'number타입의 유저 id',
   },
-  workspace: {
-    example: '1',
-    description: 'number타입의 이용 가능한 워크스페이스 id',
-  },
   isActive: {
     example: 'true',
     description: 'boolean타입의 현재 사용가능한 회원 여부',
@@ -81,6 +83,7 @@ const resDtoSwagger: Record<keyof ICreateUserResDto, any> = {
   name: reqDtoSwagger.name,
   phone: reqDtoSwagger.phone,
   signInType: reqDtoSwagger.signInType,
+  company: reqDtoSwagger.company,
 };
 
 export class CreateUserResDto implements ICreateUserResDto {
@@ -109,13 +112,11 @@ export class CreateUserResDto implements ICreateUserResDto {
   @IsEnum(SignInTypes ?? {})
   signInType: SignInTypes;
 
-  @ApiProperty(resDtoSwagger.workspace)
-  @IsNumber()
-  @IsOptional()
-  workspace?: Workspace;
-
   @ApiProperty(resDtoSwagger.isActive)
   @IsNotEmpty()
   @IsNumber()
   isActive: boolean;
+
+  @ApiProperty(reqDtoSwagger.signInType)
+  company: string;
 }

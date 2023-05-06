@@ -9,8 +9,8 @@ import {
   Unique,
 } from 'typeorm';
 
-import { Workspace } from '../../workspace';
 import { IsOptional } from 'class-validator';
+import { Company } from 'src/domains/companies';
 
 export enum SignInTypes {
   Kakao = 'KA',
@@ -45,9 +45,9 @@ const userSwagger: Record<keyof User, any> = {
     example: true,
     description: '사용가능한 유저인가',
   },
-  workspace: {
+  company: {
     example: '1',
-    description: '사용가능한 모든 워크스페이스의 id',
+    description: '현재 속해있는 회사',
   },
 };
 
@@ -85,8 +85,7 @@ export class User {
   @Column()
   password: string;
 
-  @ApiProperty(userSwagger.workspace)
-  @IsOptional()
-  @ManyToOne(() => Workspace, (workspace) => workspace.users)
-  workspace?: Workspace;
+  @ApiProperty(userSwagger.company)
+  @ManyToOne(() => Company, (c) => c.reservation)
+  company: string;
 }
