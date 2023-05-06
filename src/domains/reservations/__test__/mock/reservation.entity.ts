@@ -1,4 +1,4 @@
-import { Reservation, ServiceType } from '../../entities/reservations.entity';
+import { Reservation, ServiceType } from '../../reservations.entity';
 
 export const mockReservation = (): Reservation => {
   return {

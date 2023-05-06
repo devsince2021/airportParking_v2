@@ -1,8 +1,8 @@
 import { Test } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { BadRequestException } from '@nestjs/common';
-import { ReservationsController } from '../controllers/reservations.controller';
-import { ReservationsService } from '../services/reservations.service';
+import { ReservationsController } from '../reservations.controller';
+import { ReservationsService } from '../reservations.service';
 import { dummyFile } from './mock/dummyFile';
 
 const mockConfig = {

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import _ from 'lodash';
 
-import { ReservationRepository } from '../repositories/reservation.repository';
-import { ReservationsParseService } from './reservationsParse.service';
+import { ReservationRepository } from './reservation.repository';
+import { ReservationsParseService } from './reservations.parse_service';
 
 @Injectable()
 export class ReservationsService {

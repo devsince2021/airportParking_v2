@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import _ from 'lodash';
 
-import { Reservation } from '../entities/reservations.entity';
+import { Reservation } from './reservations.entity';
 
 type ParamType<T> = T extends (param: infer P, ...args: any[]) => any
   ? P

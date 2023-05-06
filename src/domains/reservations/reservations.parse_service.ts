@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import xlsx from 'xlsx';
 import _ from 'lodash';
-import {
-  EXCEL_COLUMNS,
-  Reservation,
-  ServiceType,
-} from '../entities/reservations.entity';
+import { EXCEL_COLUMNS, Reservation, ServiceType } from './reservations.entity';
 import { ConfigService } from '@nestjs/config';
 
 type ParsedRow = Record<string, string>;

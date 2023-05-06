@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { ReservationsController } from './controllers/reservations.controller';
-import { ReservationsParseService } from './services/reservationsParse.service';
-import { ReservationsService } from './services/reservations.service';
-import { Reservation } from './entities/reservations.entity';
-import { ReservationRepository } from './repositories/reservation.repository';
+import { ReservationsController } from './reservations.controller';
+import { ReservationsParseService } from './reservations.parse_service';
+import { ReservationsService } from './reservations.service';
+import { Reservation } from './reservations.entity';
+import { ReservationRepository } from './reservation.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Reservation])],
@@ -15,5 +15,6 @@ import { ReservationRepository } from './repositories/reservation.repository';
     ReservationsParseService,
     ReservationRepository,
   ],
+  exports: [ReservationsService],
 })
 export class ReservationModule {}

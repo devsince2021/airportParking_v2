@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Company } from '../../companies';
+import { Company } from '../companies';
 
 export const EXCEL_COLUMNS = [
   '번호',

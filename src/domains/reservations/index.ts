@@ -1,2 +1,2 @@
-export { Reservation } from './entities/reservations.entity';
+export { Reservation } from './reservations.entity';
 export { ReservationModule } from './reservation.module';

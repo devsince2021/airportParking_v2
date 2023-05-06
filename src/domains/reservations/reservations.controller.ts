@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { FileValidationPipe } from '../pipes/FileValidation.pipe';
-import { ReservationsService } from '../services/reservations.service';
+import { FileValidationPipe } from '../../utils/fileValidation.pipe';
+import { ReservationsService } from './reservations.service';
 
 @Controller('api/reservation')
 export class ReservationsController {
