@@ -12,7 +12,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FileValidationPipe } from '../pipes/FileValidation.pipe';
 import { ReservationsService } from '../services/reservations.service';
 
-@Controller('api/reservations')
+@Controller('api/reservation')
 export class ReservationsController {
   constructor(
     private configService: ConfigService,

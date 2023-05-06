@@ -18,7 +18,7 @@ import { LocalAuthGuard } from '../auth/guards/localAuth.guard';
 import { TAG, OPERATION, RESPONSE } from './defines/users.swagger';
 
 @ApiTags(TAG)
-@Controller('api/users')
+@Controller('api/user')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
@@ -35,6 +35,7 @@ export class UsersController {
     };
   }
 
+  @Get()
   @Get('/logout')
   async logout(@Request() req) {
     console.log('@@', req.session);
