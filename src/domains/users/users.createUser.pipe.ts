@@ -19,8 +19,8 @@ const errorMessages: Record<keyof ICreateUserReqDto | 'default', string> = {
   phone: '전화번호를 입력해주세요.',
   signInType: '회원가입 유형을 확인해주세요.',
   default: '잘못된 유저 정보를 입력하였습니다. 확인해주세요.',
-  userId: '잘못된 userId 입니다.',
-  company: '',
+  userId: '잘못된 사용자 아이디 입니다.',
+  company: '잘못된 회사 아이디 입니다',
 };
 
 @Injectable()

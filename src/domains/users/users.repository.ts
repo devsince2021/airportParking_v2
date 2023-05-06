@@ -6,7 +6,7 @@ import { CreateUserReqDto } from './dtos/users.createUser.dto';
 import { User } from './user.entity';
 
 const errorMessageTable = {
-  ER_DUP_ENTRY: '중복된 전화번호 입니다. 다시 확인해주세요.',
+  ER_DUP_ENTRY: '중복된 유저 아이디 입니다. 다시 확인해주세요.',
 };
 
 @Injectable()

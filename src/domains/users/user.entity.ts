@@ -87,5 +87,5 @@ export class User {
 
   @ApiProperty(userSwagger.company)
   @ManyToOne(() => Company, (c) => c.reservation)
-  company: string;
+  company: Company;
 }

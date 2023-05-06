@@ -13,6 +13,7 @@ export class UsersService {
   ) {}
 
   async createUser(createUserDto: CreateUserReqDto) {
+    console.log('createUserDto', createUserDto);
     const hashedDto = await this.hashPassword(createUserDto);
     const { password, ...user } = await this.usersRepository.insert(hashedDto);
 

@@ -4,7 +4,7 @@ import {
 } from '../../dtos/users.createUser.dto';
 import { SignInTypes } from '../../user.entity';
 
-export const mockValidCreateUserReqDto = (): ICreateUserReqDto => {
+export const mockValidCreateUserReqDto = () => {
   return {
     password: '123',
     name: '김아무개',
@@ -24,7 +24,7 @@ export const mockInvalidCreateUserReqDto = () => {
   } as ICreateUserReqDto;
 };
 
-export const mockValidCreateUserResDto = (): ICreateUserResDto => {
+export const mockValidCreateUserResDto = () => {
   return {
     id: 1,
     signInType: SignInTypes.UserId,
