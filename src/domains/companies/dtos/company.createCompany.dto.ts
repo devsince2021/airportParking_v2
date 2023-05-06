@@ -1,12 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsNotEmpty,
-  IsEnum,
-  IsNumber,
-  IsOptional,
-  IsBoolean,
-} from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 import { Company } from '../company.entity';
 
 export interface ICreateCompanyReqDto {
@@ -14,7 +7,6 @@ export interface ICreateCompanyReqDto {
   name: string;
   contact: string;
   representative: string;
-  // isRunning: boolean;
 }
 
 const reqDtoSwagger: Record<keyof ICreateCompanyReqDto, any> = {
@@ -34,10 +26,6 @@ const reqDtoSwagger: Record<keyof ICreateCompanyReqDto, any> = {
     example: '김하마',
     description: '회사 담당자 이름',
   },
-  // isRunning: {
-  //   example: 'true',
-  //   description: '현재 사업 진행 여부',
-  // },
 };
 
 export class CreateCompanyReqDto implements ICreateCompanyReqDto {
@@ -61,20 +49,11 @@ export class CreateCompanyReqDto implements ICreateCompanyReqDto {
   @IsNotEmpty()
   @IsString()
   representative: string;
-
-  // @ApiProperty(reqDtoSwagger.isRunning)
-  // @IsNotEmpty()
-  // @IsBoolean()
-  // isRunning: boolean;
 }
 
 export interface ICreateCompanyResDto {
   isSuccess: boolean;
-  data?: Company;
-  error?: {
-    message: string;
-    code: string;
-  };
+  data: Company;
 }
 
 const resDtoSwagger: Record<keyof ICreateCompanyResDto, any> = {
@@ -86,13 +65,6 @@ const resDtoSwagger: Record<keyof ICreateCompanyResDto, any> = {
     example: Company,
     description: '생성된 회사 정보',
   },
-  error: {
-    example: {
-      message: '중복된 사업자 등록번호가 있습니다.',
-      code: 'C111',
-    },
-    description: '에러 코드와 이유',
-  },
 };
 
 export class CreateCompanyResDto implements ICreateCompanyResDto {
@@ -103,12 +75,5 @@ export class CreateCompanyResDto implements ICreateCompanyResDto {
 
   @ApiProperty(resDtoSwagger.data)
   @IsOptional()
-  data?: Company;
-
-  @ApiProperty(resDtoSwagger.error)
-  @IsOptional()
-  error?: {
-    message: string;
-    code: string;
-  };
+  data: Company;
 }

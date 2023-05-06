@@ -1,7 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { BadRequestError } from '../../utils/customException';
 import { CompanyService } from './company.service';
 
 import { OPERATION, RESPONSE, TAG } from './defines/company.swagger';
@@ -17,21 +16,11 @@ export class CompanyController {
   @ApiOkResponse(RESPONSE.createCompany)
   // @UsePipes() - todo: register pipe for check reg number
   async createCompany(@Body() dto: CreateCompanyReqDto) {
-    try {
-      const company = await this.companyService.createCompany(dto);
+    const company = await this.companyService.createCompany(dto);
 
-      return {
-        isSuccess: true,
-        data: company,
-      };
-    } catch (err) {
-      if (err instanceof BadRequestError) {
-        return {
-          isSuccess: false,
-          error: JSON.parse(err.message),
-        };
-      }
-      throw err;
-    }
+    return {
+      isSuccess: true,
+      data: company,
+    };
   }
 }
