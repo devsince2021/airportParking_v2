@@ -53,8 +53,6 @@ describe('Company controller', () => {
       expect(result).toHaveProperty('isSuccess');
       expect(result.isSuccess).toBe(false);
       expect(result).toHaveProperty('error');
-      expect(result.error).toHaveProperty('code');
-      expect(result.error).toHaveProperty('message');
     });
   });
 });

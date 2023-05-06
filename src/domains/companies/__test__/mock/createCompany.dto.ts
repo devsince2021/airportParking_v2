@@ -33,12 +33,12 @@ export const mockCreateCompanyResDtoSuccess = (): ICreateCompanyResDto => {
   };
 };
 
-export const mockCreateCompanyResDtoFail = (): ICreateCompanyResDto => {
-  return {
-    isSuccess: false,
-    error: {
-      message: '회사를 생성하는 중 문제가 발생하였습니다.',
-      code: 'D_2000_Company',
-    },
-  };
-};
+// export const mockCreateCompanyResDtoFail = (): ICreateCompanyResDto => {
+//   return {
+//     isSuccess: false,
+//     error: {
+//       message: '회사를 생성하는 중 문제가 발생하였습니다.',
+//       code: 'D_2000_Company',
+//     },
+//   };
+// };
