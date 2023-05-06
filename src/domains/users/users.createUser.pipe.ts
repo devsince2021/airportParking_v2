@@ -21,6 +21,7 @@ const errorMessages: Record<keyof ICreateUserReqDto | 'default', string> = {
   default: '잘못된 유저 정보를 입력하였습니다. 확인해주세요.',
   userId: '잘못된 사용자 아이디 입니다.',
   company: '잘못된 회사 아이디 입니다',
+  companyId: '?',
 };
 
 @Injectable()

@@ -34,6 +34,10 @@ const reqDtoSwagger: Record<keyof ICreateUserReqDto, any> = {
     enum: SignInTypes,
     enumName: '회원가입 종류',
   },
+  companyId: {
+    example: '1',
+    description: '회사 id',
+  },
   company: {
     example: '1',
     description: '회사 id',
@@ -66,6 +70,8 @@ export class CreateUserReqDto implements ICreateUserReqDto {
   @IsEnum(SignInTypes ?? {})
   signInType: SignInTypes;
 
+  companyId: number;
+
   @ApiProperty(reqDtoSwagger.company)
   company: any;
 }
@@ -86,6 +92,7 @@ const resDtoSwagger: Record<keyof ICreateUserResDto, any> = {
   phone: reqDtoSwagger.phone,
   signInType: reqDtoSwagger.signInType,
   company: reqDtoSwagger.company,
+  companyId: reqDtoSwagger.companyId,
 };
 
 export class CreateUserResDto implements ICreateUserResDto {
@@ -118,6 +125,8 @@ export class CreateUserResDto implements ICreateUserResDto {
   @IsNotEmpty()
   @IsNumber()
   isActive: boolean;
+
+  companyId: number;
 
   @ApiProperty(reqDtoSwagger.company)
   company: any;

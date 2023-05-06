@@ -12,8 +12,13 @@ export class UsersService {
     private configService: ConfigService,
   ) {}
 
+  async getUser(getUserDto: any) {
+    const user = await this.usersRepository.find({ id: getUserDto.id });
+    console.log('user', user);
+    return user;
+  }
+
   async createUser(createUserDto: CreateUserReqDto) {
-    console.log('createUserDto', createUserDto);
     const hashedDto = await this.hashPassword(createUserDto);
     const { password, ...user } = await this.usersRepository.insert(hashedDto);
 

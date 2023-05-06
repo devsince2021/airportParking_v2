@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Request,
   UseGuards,
@@ -35,17 +36,19 @@ export class UsersController {
     };
   }
 
-  @Get()
+  @UseGuards(AuthenticatedGuard)
+  @Get(':id')
+  async getUser(@Param('id') id) {
+    const user = await this.userService.getUser({ id });
+    console.log('id', user);
+    return { isSuccess: true };
+    //
+  }
+
   @Get('/logout')
   async logout(@Request() req) {
     console.log('@@', req.session);
     req.session.destroy();
     return true;
-  }
-
-  @UseGuards(AuthenticatedGuard)
-  @Get('/user')
-  getUser(@Request() req) {
-    return req.user;
   }
 }

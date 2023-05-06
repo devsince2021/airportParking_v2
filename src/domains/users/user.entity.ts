@@ -45,6 +45,10 @@ const userSwagger: Record<keyof User, any> = {
     example: true,
     description: '사용가능한 유저인가',
   },
+  companyId: {
+    example: '1',
+    description: '현재 속해있는 회사',
+  },
   company: {
     example: '1',
     description: '현재 속해있는 회사',
@@ -84,6 +88,9 @@ export class User {
   @ApiProperty(userSwagger.password)
   @Column()
   password: string;
+
+  @Column({ nullable: true })
+  companyId: number;
 
   @ApiProperty(userSwagger.company)
   @ManyToOne(() => Company, (c) => c.reservation)
