@@ -7,7 +7,7 @@ export const mockValidUser = () => {
     name: '김아무개',
     phone: '01011111111',
     password: '123',
-    signInType: SignInTypes.Phone,
+    signInType: SignInTypes.UserId,
   };
 };
 

@@ -1,21 +1,26 @@
-import { Body, Controller, Get, Post, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CreateUserReqDto } from '../dtos/createUser.dto';
 import { UsersService } from '../services/users.service';
 import { CreateUserPipe } from '../pipes/createUser.pipe';
+import { AuthenticatedGuard } from '../../auth/guards/authenticated.guard';
+import { LocalAuthGuard } from '../../auth/guards/localAuth.guard';
 
 import { TAG, OPERATION, RESPONSE } from './swaggerDefine';
 
 @ApiTags(TAG)
-@Controller('users')
+@Controller('api/users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
-
-  @Get('user')
-  getUser(): string {
-    return 'hi all user';
-  }
 
   @Post()
   @ApiOperation(OPERATION.createUser)
@@ -24,6 +29,36 @@ export class UsersController {
   async createUser(@Body() createUserDto: CreateUserReqDto) {
     const response = await this.userService.createUser(createUserDto);
 
-    return response;
+    return {
+      isSuccess: true,
+      data: response,
+    };
+  }
+
+  // // pipe 추가
+  // @UseGuards(LocalAuthGuard)
+  // @Post('/login')
+  // async login(@Request() req) {
+  //   try {
+  //     return {
+  //       isSuccess: true,
+  //       data: req.user,
+  //     };
+  //   } catch (err) {
+  //     console.log(err, '22');
+  //   }
+  // }
+
+  @Get('/logout')
+  async logout(@Request() req) {
+    console.log('@@', req.session);
+    req.session.destroy();
+    return true;
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('/user')
+  getUser(@Request() req) {
+    return req.user;
   }
 }

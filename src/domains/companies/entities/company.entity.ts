@@ -8,8 +8,8 @@ import {
   Unique,
 } from 'typeorm';
 
+import { Reservation } from '../../reservations';
 import { Workspace } from '../../workspace';
-import { Reservation } from 'src/domains/reservations';
 
 const companySwagger: Record<keyof Company, any> = {
   id: {
