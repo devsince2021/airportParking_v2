@@ -29,6 +29,7 @@ export class AppViewController {
     const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
 
     return {
+      frame: false,
       title: '예약',
       uploadKey,
       isSuccess: undefined,
