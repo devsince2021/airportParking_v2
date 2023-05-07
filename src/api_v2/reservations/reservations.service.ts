@@ -12,6 +12,15 @@ export class ReservationsService {
     private reservationRepository: ReservationRepository,
   ) {}
 
+  async getReservations(listDate: string, companyId: number) {
+    const result = await this.reservationRepository.find({
+      listDate,
+      companyId,
+    });
+
+    return result;
+  }
+
   async createReservation({ file, date, companyId }: ICreateReservationDto) {
     const rows = this.parseService.parse([file], date, companyId);
 

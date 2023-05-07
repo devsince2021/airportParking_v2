@@ -21,7 +21,8 @@ import { UsersModule, User } from './api_v2/users';
 import { Company, CompanyModule } from './api_v2/companies';
 import { AuthModule } from './api_v2/auth/auth.module';
 import { Reservation, ReservationModule } from './api_v2/reservations';
-import { AppViewController } from './admin/app.adminController';
+import { AppAdminController } from './admin/app.adminController';
+import { AppControllerV1 } from './api_v1/app.controller.v1';
 
 @Module({
   imports: [
@@ -58,7 +59,7 @@ import { AppViewController } from './admin/app.adminController';
     CompanyModule,
   ],
 
-  controllers: [AppViewController],
+  controllers: [AppAdminController, AppControllerV1],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
