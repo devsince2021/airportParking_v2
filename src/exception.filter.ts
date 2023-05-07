@@ -10,7 +10,7 @@ import { Request, Response } from 'express';
 import _ from 'lodash';
 
 import { BadRequestError } from './utils/customException';
-import { User } from './domains/users';
+import { User } from './api_v2/users';
 
 @Catch(HttpException)
 export class GlobalExceptionFilter implements ExceptionFilter {

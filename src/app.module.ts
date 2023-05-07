@@ -15,13 +15,13 @@ import {
   SwaggerConfig,
   NaverConfig,
 } from './configs';
-
-import { UsersModule, User } from './domains/users';
-import { Company, CompanyModule } from './domains/companies';
-import { AuthModule } from './domains/auth/auth.module';
-import { Reservation, ReservationModule } from './domains/reservations';
 import { CorsMiddleware } from './cors.middleware';
-import { AppViewController } from './app.viewController';
+
+import { UsersModule, User } from './api_v2/users';
+import { Company, CompanyModule } from './api_v2/companies';
+import { AuthModule } from './api_v2/auth/auth.module';
+import { Reservation, ReservationModule } from './api_v2/reservations';
+import { AppViewController } from './admin/app.adminController';
 
 @Module({
   imports: [

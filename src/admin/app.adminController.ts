@@ -16,11 +16,11 @@ import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
 import _ from 'lodash';
 
-import { LocalAuthGuard } from 'src/domains/auth/guards/localAuth.guard';
-import { CompanyGuard } from 'src/domains/auth/guards/company.guard';
-import { AuthenticatedGuard } from 'src/domains/auth/guards/authenticated.guard';
+import { LocalAuthGuard } from 'src/api_v2/auth/guards/localAuth.guard';
+import { CompanyGuard } from 'src/api_v2/auth/guards/company.guard';
+import { AuthenticatedGuard } from 'src/api_v2/auth/guards/authenticated.guard';
 import { FileValidationPipe } from 'src/utils/fileValidation.pipe';
-import { ReservationsService } from 'src/domains/reservations/reservations.service';
+import { ReservationsService } from 'src/api_v2/reservations/reservations.service';
 
 @Controller()
 export class AppViewController {
