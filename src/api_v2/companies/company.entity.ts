@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 import { Reservation } from '../reservations';
-import { User } from 'src/domains/users';
+import { User } from 'src/api_v2/users';
 
 const companySwagger: Record<keyof Company, any> = {
   id: {

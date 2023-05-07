@@ -16,14 +16,15 @@ import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
 import _ from 'lodash';
 
-import { LocalAuthGuard } from 'src/domains/auth/guards/localAuth.guard';
-import { CompanyGuard } from 'src/domains/auth/guards/company.guard';
-import { AuthenticatedGuard } from 'src/domains/auth/guards/authenticated.guard';
+import { LocalAuthGuard } from 'src/api_v2/auth/guards/localAuth.guard';
+import { CompanyGuard } from 'src/api_v2/auth/guards/company.guard';
+import { AuthenticatedGuard } from 'src/api_v2/auth/guards/authenticated.guard';
 import { FileValidationPipe } from 'src/utils/fileValidation.pipe';
-import { ReservationsService } from 'src/domains/reservations/reservations.service';
+import { ReservationsService } from 'src/api_v2/reservations/reservations.service';
+import { getCompanyId } from 'src/utils/session';
 
 @Controller()
-export class AppViewController {
+export class AppAdminController {
   constructor(
     private readonly configService: ConfigService,
     private readonly reservationService: ReservationsService,
@@ -66,7 +67,7 @@ export class AppViewController {
     @Session() session,
     @Res() res,
   ) {
-    const companyId = _.get(session, ['passport', 'user', 'companyId'], null);
+    const companyId = getCompanyId(session);
 
     const isSuccess = await this.reservationService.createReservation({
       date,

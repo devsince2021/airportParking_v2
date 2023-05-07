@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 
-import { errorMessages } from '../src/domains/auth/pipes/smsCodePipe';
+import { errorMessages } from '../src/api_v2/auth/pipes/smsCodePipe';
 
 import { initializeApp } from './helpers/initializeApp';
 

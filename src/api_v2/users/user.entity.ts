@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 import { IsOptional } from 'class-validator';
-import { Company } from 'src/domains/companies';
+import { Company } from 'src/api_v2/companies';
 
 export enum SignInTypes {
   Kakao = 'KA',

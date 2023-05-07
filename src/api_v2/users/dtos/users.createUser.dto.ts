@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 
 import { SignInTypes, User } from '../user.entity';
-import { Company } from 'src/domains/companies';
+import { Company } from 'src/api_v2/companies';
 
 export type ICreateUserReqDto = Omit<User, 'id' | 'isActive'>;
 

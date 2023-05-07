@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 
 import { VerifyCodeReqDto } from '../dtos/auth.verifyCodeDto';
 import { NaverService } from './naver.service';
-import { UsersRepository } from 'src/domains/users/users.repository';
+import { UsersRepository } from 'src/api_v2/users/users.repository';
 import { BadRequestError } from 'src/utils/customException';
 import { Auth_Service_Code, Auth_Service_Msg } from '../constants/errorCode';
 import { ConfigService } from '@nestjs/config';

@@ -36,16 +36,6 @@ export class ReservationRepository {
     return true;
   }
 
-  async findOne(option: FindOneOptions<Reservation>['where']) {
-    try {
-      const list = await this.reservationRepository.findOne({ where: option });
-
-      return list;
-    } catch (err) {
-      throw new BadRequestException('예약 검색에 실패하였습니다.');
-    }
-  }
-
   async bulkInsert(rows: Omit<Reservation, 'id'>[]) {
     try {
       await this.reservationRepository
@@ -100,6 +90,25 @@ export class ReservationRepository {
         .execute();
     } catch (err) {
       throw new BadRequestException('예약 삭제에 실패하였습니다.');
+    }
+  }
+
+  async findOne(option: FindOneOptions<Reservation>['where']) {
+    try {
+      const list = await this.reservationRepository.findOne({ where: option });
+
+      return list;
+    } catch (err) {
+      throw new BadRequestException('예약 검색에 실패하였습니다.');
+    }
+  }
+
+  async find(option: FindOneOptions<Reservation>['where']) {
+    try {
+      const list = await this.reservationRepository.find({ where: option });
+      return list;
+    } catch (err) {
+      throw new BadRequestException('예약 검색에 실패하였습니다.');
     }
   }
 }
