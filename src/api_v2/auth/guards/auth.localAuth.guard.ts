@@ -16,6 +16,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
     } catch (err) {
       if (err instanceof BadRequestError) {
         response.locals.isFailLogin = true;
+        response.locals.failMessage = err.message;
 
         return true;
       }

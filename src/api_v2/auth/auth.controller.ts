@@ -1,4 +1,11 @@
-import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Res,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
@@ -7,6 +14,7 @@ import { VerifyCodeReqDto } from './dtos/auth.verifyCodeDto';
 
 import { TAG, OPERATION, RESPONSE } from './defines/auth.swagger';
 import { SmsCodePipe } from './pipes/auth.smsCodePipe';
+import { LocalAuthGuard } from './guards/auth.localAuth.guard';
 
 @ApiTags(TAG)
 @Controller('api/auth')
@@ -30,5 +38,14 @@ export class AuthController {
     const isValid = await this.authService.verifyCode(dto);
 
     return { isSuccess: isValid };
+  }
+
+  // TODO - 앱서버와 어드민 분리되면 수정되어야함
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Res() res) {
+    const isSuccess = !res.locals.isFailLogin;
+    const message = res.locals.failMessage;
+    return res.json({ isSuccess, message });
   }
 }
