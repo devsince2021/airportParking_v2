@@ -4,7 +4,7 @@ import { HttpModule } from '@nestjs/axios';
 import { UsersModule } from '../users';
 
 import { AuthService } from './services/auth.service';
-import { AuthController } from './controllers/auth.controller';
+import { AuthController } from './auth.controller';
 
 import { NaverService } from './services/naver.service';
 import { LocalStrategy } from './services/passport.localStrategy';

@@ -1,4 +1,4 @@
-import { AuthController } from '../controllers/auth.controller';
+import { AuthController } from '../auth.controller';
 import { AuthService } from '../services/auth.service';
 import { ISendVerifyCodeResDto } from '../dtos/auth.sendVerifyCodeDto';
 

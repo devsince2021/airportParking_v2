@@ -8,7 +8,7 @@ import { Cache } from 'cache-manager';
 import { AuthService } from '../services/auth.service';
 
 import { NaverService } from '../services/naver.service';
-import { AuthController } from '../controllers/auth.controller';
+import { AuthController } from '../auth.controller';
 
 export const createTestModule = async () => {
   const module: TestingModule = await Test.createTestingModule({

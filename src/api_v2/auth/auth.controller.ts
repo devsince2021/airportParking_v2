@@ -1,12 +1,12 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { AuthService } from '../services/auth.service';
-import { SendVerifyCodeReqDto } from '../dtos/auth.sendVerifyCodeDto';
-import { VerifyCodeReqDto } from '../dtos/auth.verifyCodeDto';
+import { AuthService } from './services/auth.service';
+import { SendVerifyCodeReqDto } from './dtos/auth.sendVerifyCodeDto';
+import { VerifyCodeReqDto } from './dtos/auth.verifyCodeDto';
 
-import { TAG, OPERATION, RESPONSE } from './swaggerDefine';
-import { SmsCodePipe } from '../pipes/smsCodePipe';
+import { TAG, OPERATION, RESPONSE } from './defines/auth.swagger';
+import { SmsCodePipe } from './pipes/auth.smsCodePipe';
 
 @ApiTags(TAG)
 @Controller('api/auth')
