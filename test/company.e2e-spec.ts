@@ -6,9 +6,9 @@ import {
   mockCreateCompanyResDtoSuccess,
   mockInvalidCreateCompanyReqDto,
   mockValidCreateCompanyReqDto,
-} from '../src/domains/companies/__test__/mock/createCompany.dto';
-import { mockCompany } from '../src/domains/companies/__test__/mock/company.entity';
-import { Company } from '../src/domains/companies';
+} from '../src/api_v2/companies/__test__/mock/createCompany.dto';
+import { mockCompany } from '../src/api_v2/companies/__test__/mock/company.entity';
+import { Company } from '../src/api_v2/companies';
 
 import { initializeApp } from './helpers/initializeApp';
 

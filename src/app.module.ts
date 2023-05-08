@@ -15,15 +15,14 @@ import {
   SwaggerConfig,
   NaverConfig,
 } from './configs';
-
-import { UsersModule, User } from './domains/users';
-import { Company, CompanyModule } from './domains/companies';
-import { AuthModule } from './domains/auth/auth.module';
-import { Workspace, WorkspaceMembership } from './domains/workspace';
-import { Membership } from './domains/membership';
-import { Reservation, ReservationModule } from './domains/reservations';
 import { CorsMiddleware } from './cors.middleware';
-import { AppViewController } from './app.controller';
+
+import { UsersModule, User } from './api_v2/users';
+import { Company, CompanyModule } from './api_v2/companies';
+import { AuthModule } from './api_v2/auth/auth.module';
+import { Reservation, ReservationModule } from './api_v2/reservations';
+import { AppAdminController } from './admin/app.adminController';
+import { AppControllerV1 } from './api_v1/app.controller.v1';
 
 @Module({
   imports: [
@@ -48,14 +47,7 @@ import { AppViewController } from './app.controller';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [
-            User,
-            Workspace,
-            Company,
-            WorkspaceMembership,
-            Membership,
-            Reservation,
-          ],
+          entities: [User, Company, Reservation],
           synchronize: configService.get('DB_SYNC'),
         };
       },
@@ -67,14 +59,14 @@ import { AppViewController } from './app.controller';
     CompanyModule,
   ],
 
-  controllers: [AppViewController],
+  controllers: [AppAdminController, AppControllerV1],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(CorsMiddleware)
       .forRoutes(
-        { path: '/api/users/*', method: RequestMethod.POST },
+        { path: '/api/user', method: RequestMethod.POST },
         { path: '/api/reservation', method: RequestMethod.POST },
       );
   }

@@ -7,7 +7,7 @@ import {
   mockInvalidCreateUserReqDto,
   mockValidCreateUserReqDto,
   mockValidCreateUserResDto,
-} from '../src/domains/users/__test__/mocks/users.createDto';
+} from '../src/api_v2/users/__test__/mocks/users.createDto';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;

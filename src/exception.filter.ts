@@ -7,7 +7,10 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import _ from 'lodash';
+
 import { BadRequestError } from './utils/customException';
+import { User } from './api_v2/users';
 
 @Catch(HttpException)
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -31,10 +34,13 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
   authExceptionHandler(exception: UnauthorizedException) {
     const isLoggedIn = this.request.isAuthenticated();
+    const hasCompany = !_.isNil((this.request.user as User)?.companyId);
     const status = exception.getStatus();
 
     if (!isLoggedIn) {
-      return this.response.status(status).redirect('/users/login');
+      return this.response.status(status).redirect('/login');
+    } else if (!hasCompany) {
+      return this.response.status(status).redirect('/company');
     }
 
     return this.defaultHandler(exception);

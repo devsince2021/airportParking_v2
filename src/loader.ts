@@ -28,11 +28,7 @@ export class Loader {
 
   setStaticFiles() {
     this.app.useStaticAssets(join(__dirname, '..', 'public'));
-    this.app.setBaseViewsDir([
-      join(__dirname, '..', 'src', 'domains', 'reservations', 'views'),
-      join(__dirname, '..', 'src', 'domains', 'users', 'views'),
-      join(__dirname, '..', 'src', 'views'),
-    ]);
+    this.app.setBaseViewsDir([join(__dirname, '..', 'public', 'views')]);
 
     this.app.setViewEngine('ejs');
     this.app.use(
