@@ -5,7 +5,7 @@ import { CacheModule } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth.service';
 
 import { NaverService } from '../services/naver.service';
 import { AuthController } from '../auth.controller';

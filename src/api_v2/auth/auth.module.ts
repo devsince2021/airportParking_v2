@@ -3,7 +3,7 @@ import { HttpModule } from '@nestjs/axios';
 
 import { UsersModule } from '../users';
 
-import { AuthService } from './services/auth.service';
+import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 
 import { NaverService } from './services/naver.service';

@@ -4,11 +4,11 @@ import { Cache } from 'cache-manager';
 import _ from 'lodash';
 import bcrypt from 'bcrypt';
 
-import { VerifyCodeReqDto } from '../dtos/auth.verifyCodeDto';
-import { NaverService } from './naver.service';
+import { VerifyCodeReqDto } from './dtos/auth.verifyCodeDto';
+import { NaverService } from './services/naver.service';
 import { UsersRepository } from 'src/api_v2/users/users.repository';
 import { BadRequestError } from 'src/utils/customException';
-import { Auth_Service_Code, Auth_Service_Msg } from '../defines/auth.errorCode';
+import { Auth_Service_Code, Auth_Service_Msg } from './defines/auth.errorCode';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()

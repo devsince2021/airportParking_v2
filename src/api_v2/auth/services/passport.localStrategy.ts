@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 
 import { User } from '../../users';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
 
 type UserNoPassword = Omit<User, 'password'>;
 

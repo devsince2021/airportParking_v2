@@ -7,7 +7,6 @@ export class AppControllerV1 {
 
   @Get()
   async getChart(@Query('listDate') date) {
-    console.log('hi?');
     const tempId = 1;
     const reservation = await this.reservationService.getReservations(
       date,
