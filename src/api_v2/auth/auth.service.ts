@@ -73,10 +73,7 @@ export class AuthService {
   }
 
   async isCorrectPassword(password: string, savedPassword: string) {
-    const salt = this.configService.get('USER_PASSWORD_SALT');
-    const hashed = await bcrypt.hash(password, salt);
-
-    const isMatch = await bcrypt.compare(savedPassword, hashed);
+    const isMatch = await bcrypt.compare(password, savedPassword);
 
     return isMatch;
   }
