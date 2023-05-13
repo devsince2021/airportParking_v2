@@ -19,17 +19,34 @@
   <body>
     <% if (frame) { %>
     <div class="w-screen min-h-screen flex">
+      <div class="flex flex-col border-r w-1/6 items-center pt-20 bg-gray-100">
+        <div id="/reservation/new" class="flex justify-center w-full py-5">
+          <a class="text-lg" href="/reservation/new">주차 목록 생성</a>
+        </div>
+        <!-- <div id="/reservation/list" class="flex justify-center w-full py-5">
+          <a class="text-lg" href="/reservation/list">주차 목록 확인</a>
+        </div> -->
+      </div>
       <div class="flex flex-col w-full">
-        <div class="flex px-5 py-5 justify-end">
-          <div class="pr-5">
-            <form action="/logout">
-              <button>logout</button>
-            </form>
-          </div>
+        <div class="flex py-5 justify-end pr-10 border-b">
+          <form action="/logout">
+            <button>로그아웃</button>
+          </form>
         </div>
         <%- body %>
       </div>
     </div>
     <% } else { %> <%- body %> <% } %>
   </body>
+  <script>
+    // anchor color
+    const path_define = {
+      reservationNew: '/reservation/new',
+      reservationList: '/reservation/list',
+    };
+    const pathName = window.location.pathname;
+    const anchor = document.getElementById(pathName);
+    anchor.style.cssText = 'color: blue';
+    //
+  </script>
 </html>

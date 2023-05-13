@@ -22,6 +22,9 @@ import { FileValidationPipe } from 'src/utils/fileValidation.pipe';
 import { ReservationsService } from 'src/api_v2/reservations/reservations.service';
 import { getCompanyId } from 'src/utils/session';
 
+const create = '/reservation/new';
+const read = '/reservation/list';
+
 @Controller()
 export class AppAdminController {
   constructor(
@@ -41,12 +44,12 @@ export class AppAdminController {
   @UseGuards(AuthenticatedGuard, CompanyGuard)
   @Get()
   async showDashboard(@Res() res) {
-    return res.redirect('/reservation');
+    return res.redirect(create);
   }
 
   // 예약 관리
   @UseGuards(AuthenticatedGuard, CompanyGuard)
-  @Get('/reservation')
+  @Get(create)
   @Render('reservation.ejs')
   async showRegistration(@Query('isSuccess') isSuccess) {
     const uploadKey = this.configService.get('RESERVATION_UPLOAD_KEY');
@@ -74,7 +77,7 @@ export class AppAdminController {
       companyId,
     });
 
-    return res.redirect(`/reservation?isSuccess=${isSuccess}`);
+    return res.redirect(`${create}?isSuccess=${isSuccess}`);
   }
 
   // 로그인
