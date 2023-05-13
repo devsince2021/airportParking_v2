@@ -31,7 +31,7 @@ export class UsersRepository {
     }
   }
 
-  async find(where: FindOneOptions<User>['where']) {
+  async find(where: FindOneOptions<User>['where']): Promise<User> | null {
     try {
       const user = await this.usersRepository.findOne({ where });
 

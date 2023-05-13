@@ -36,17 +36,15 @@ export class UsersController {
   }
 
   @UseGuards(AuthenticatedGuard)
-  @Get(':id')
-  async getUser(@Param('id') id) {
-    const user = await this.userService.getUser({ id });
-    console.log('id', user);
-    return { isSuccess: true };
-    //
+  @Get(':userId')
+  async getUser(@Param('userId') userId) {
+    const user = await this.userService.getUser(userId);
+
+    return { isSuccess: true, data: user };
   }
 
   @Get('/logout')
   async logout(@Request() req) {
-    console.log('@@', req.session);
     req.session.destroy();
     return true;
   }
