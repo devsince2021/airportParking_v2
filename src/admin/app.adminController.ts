@@ -14,11 +14,10 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
-import _ from 'lodash';
 
-import { LocalAuthGuard } from 'src/api_v2/auth/guards/localAuth.guard';
-import { CompanyGuard } from 'src/api_v2/auth/guards/company.guard';
-import { AuthenticatedGuard } from 'src/api_v2/auth/guards/authenticated.guard';
+import { AdminAuthGuard } from 'src/api_v2/auth/guards/auth.adminAuth.guard';
+import { CompanyGuard } from 'src/api_v2/auth/guards/auth.company.guard';
+import { AuthenticatedGuard } from 'src/api_v2/auth/guards/auth.authenticated.guard';
 import { FileValidationPipe } from 'src/utils/fileValidation.pipe';
 import { ReservationsService } from 'src/api_v2/reservations/reservations.service';
 import { getCompanyId } from 'src/utils/session';
@@ -90,7 +89,7 @@ export class AppAdminController {
     };
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(AdminAuthGuard)
   @Post('/login')
   async login(@Res() res) {
     const isFail = res.locals.isFailLogin;

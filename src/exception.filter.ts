@@ -60,6 +60,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       timestamp: new Date().toISOString(),
       path: this.request.url,
       message: exception.message,
+      isSuccess: false,
     });
   }
 }

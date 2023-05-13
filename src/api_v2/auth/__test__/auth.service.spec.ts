@@ -1,4 +1,4 @@
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth.service';
 import { NaverService } from '../services/naver.service';
 
 import { mockSendVerifyCodeReqDto } from './mocks/auth.sendVerifyCodeDto';

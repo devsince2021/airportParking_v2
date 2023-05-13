@@ -4,11 +4,11 @@ import { Cache } from 'cache-manager';
 import _ from 'lodash';
 import bcrypt from 'bcrypt';
 
-import { VerifyCodeReqDto } from '../dtos/auth.verifyCodeDto';
-import { NaverService } from './naver.service';
+import { VerifyCodeReqDto } from './dtos/auth.verifyCodeDto';
+import { NaverService } from './services/naver.service';
 import { UsersRepository } from 'src/api_v2/users/users.repository';
 import { BadRequestError } from 'src/utils/customException';
-import { Auth_Service_Code, Auth_Service_Msg } from '../constants/errorCode';
+import { Auth_Service_Code, Auth_Service_Msg } from './defines/auth.errorCode';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -61,7 +61,7 @@ export class AuthService {
         message: Auth_Service_Msg.S_LOGIN_ID,
         code: Auth_Service_Code.S_LOGIN_ID,
       });
-    } else if (!this.isCorrectPassword(userPassword, user.password)) {
+    } else if (!(await this.isCorrectPassword(userPassword, user.password))) {
       throw new BadRequestError({
         message: Auth_Service_Msg.S_LOGIN_PW,
         code: Auth_Service_Code.S_LOGIN_PW,
@@ -73,10 +73,7 @@ export class AuthService {
   }
 
   async isCorrectPassword(password: string, savedPassword: string) {
-    const salt = this.configService.get('USER_PASSWORD_SALT');
-    const hashed = await bcrypt.hash(password, salt);
-
-    const isMatch = await bcrypt.compare(savedPassword, hashed);
+    const isMatch = await bcrypt.compare(password, savedPassword);
 
     return isMatch;
   }
