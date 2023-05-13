@@ -7,7 +7,7 @@ import {
   IsOptional,
 } from 'class-validator';
 
-import { SignInTypes, User } from '../user.entity';
+import { SignInTypes, User, UserRole } from '../user.entity';
 import { Company } from 'src/api_v2/companies';
 
 export type ICreateUserReqDto = Omit<User, 'id' | 'isActive'>;
@@ -32,6 +32,10 @@ const reqDtoSwagger: Record<keyof ICreateUserReqDto, any> = {
   signInType: {
     enum: SignInTypes,
     enumName: '회원가입 종류',
+  },
+  role: {
+    enum: UserRole,
+    enumName: '유저 권한',
   },
   companyId: {
     example: '1',
@@ -69,6 +73,11 @@ export class CreateUserReqDto implements ICreateUserReqDto {
   @IsEnum(SignInTypes ?? {})
   signInType: SignInTypes;
 
+  @ApiProperty(reqDtoSwagger.role)
+  @IsNotEmpty()
+  @IsEnum(UserRole ?? {})
+  role: UserRole;
+
   @IsNumber()
   @IsOptional()
   companyId: number;
@@ -94,6 +103,7 @@ const resDtoSwagger: Record<keyof ICreateUserResDto, any> = {
   signInType: reqDtoSwagger.signInType,
   company: reqDtoSwagger.company,
   companyId: reqDtoSwagger.companyId,
+  role: reqDtoSwagger.role,
 };
 
 export class CreateUserResDto implements ICreateUserResDto {
@@ -121,6 +131,11 @@ export class CreateUserResDto implements ICreateUserResDto {
   @IsNotEmpty()
   @IsEnum(SignInTypes ?? {})
   signInType: SignInTypes;
+
+  @ApiProperty(reqDtoSwagger.role)
+  @IsNotEmpty()
+  @IsEnum(UserRole ?? {})
+  role: UserRole;
 
   @ApiProperty(resDtoSwagger.isActive)
   @IsNotEmpty()
