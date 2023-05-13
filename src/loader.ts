@@ -80,6 +80,9 @@ export class Loader {
         secret,
         resave: false,
         saveUninitialized: false,
+        cookie: {
+          maxAge: ttl,
+        },
       }),
     );
 
