@@ -61,7 +61,7 @@ export class AuthService {
         message: Auth_Service_Msg.S_LOGIN_ID,
         code: Auth_Service_Code.S_LOGIN_ID,
       });
-    } else if (!this.isCorrectPassword(userPassword, user.password)) {
+    } else if (!(await this.isCorrectPassword(userPassword, user.password))) {
       throw new BadRequestError({
         message: Auth_Service_Msg.S_LOGIN_PW,
         code: Auth_Service_Code.S_LOGIN_PW,
