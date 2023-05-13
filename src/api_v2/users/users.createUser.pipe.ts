@@ -21,6 +21,7 @@ const errorMessages: Record<keyof ICreateUserReqDto | 'default', string> = {
   signInType: '회원가입 유형을 확인해주세요.',
   userId: '잘못된 사용자 아이디 입니다.',
   companyId: '잘못된 회사 아이디 입니다',
+  role: '유저의 권한이 설정되지 않았습니다.',
   company: '',
 };
 

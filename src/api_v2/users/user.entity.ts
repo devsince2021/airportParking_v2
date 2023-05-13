@@ -17,6 +17,12 @@ export enum SignInTypes {
   UserId = 'I',
 }
 
+export enum UserRole {
+  Representative = 'R',
+  Manager = 'M',
+  Staff = 'S',
+}
+
 const userSwagger: Record<keyof User, any> = {
   id: {
     example: 1,
@@ -45,6 +51,10 @@ const userSwagger: Record<keyof User, any> = {
     example: true,
     description: '사용가능한 유저인가',
   },
+  role: {
+    enum: UserRole,
+    enumName: '유저권한',
+  },
   companyId: {
     example: '1',
     description: '현재 속해있는 회사',
@@ -72,6 +82,14 @@ export class User {
   @ApiProperty(userSwagger.isActive)
   @Column({ default: true })
   isActive: boolean;
+
+  @ApiProperty(userSwagger.role)
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.Staff,
+  })
+  role: UserRole;
 
   @ApiProperty(userSwagger.name)
   @Column()
