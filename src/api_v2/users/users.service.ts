@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import bcrypt from 'bcrypt';
+import _ from 'lodash';
 
 import { CreateUserReqDto } from './dtos/users.createUser.dto';
 import { UsersRepository } from './users.repository';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
@@ -12,10 +13,15 @@ export class UsersService {
     private configService: ConfigService,
   ) {}
 
-  async getUser(getUserDto: any) {
-    const user = await this.usersRepository.find({ id: getUserDto.id });
-    console.log('user', user);
-    return user;
+  async getUser(userId: string) {
+    const user = await this.usersRepository.find({ userId });
+
+    if (!_.isNil(user)) {
+      const { password, ...rest } = user;
+      return rest;
+    } else {
+      return user;
+    }
   }
 
   async createUser(createUserDto: CreateUserReqDto) {
