@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Res,
   UseGuards,
@@ -14,7 +15,8 @@ import { VerifyCodeReqDto } from './dtos/auth.verifyCodeDto';
 
 import { TAG, OPERATION, RESPONSE } from './defines/auth.swagger';
 import { SmsCodePipe } from './pipes/auth.smsCodePipe';
-import { LocalAuthGuard } from './guards/auth.localAuth.guard';
+import { AdminAuthGuard } from './guards/auth.adminAuth.guard';
+import { AuthenticatedGuard } from './guards/auth.authenticated.guard';
 
 @ApiTags(TAG)
 @Controller('api/auth')
@@ -41,11 +43,17 @@ export class AuthController {
   }
 
   // TODO - 앱서버와 어드민 분리되면 수정되어야함
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(AdminAuthGuard)
   @Post('login')
   async login(@Res() res) {
     const isSuccess = !res.locals.isFailLogin;
     const message = res.locals.failMessage;
     return res.json({ isSuccess, message });
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('isAuthenticated')
+  async isAuthenticated() {
+    return { isSuccess: true };
   }
 }

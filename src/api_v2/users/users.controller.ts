@@ -14,7 +14,6 @@ import { CreateUserReqDto } from './dtos/users.createUser.dto';
 import { UsersService } from './users.service';
 import { CreateUserPipe } from './users.createUser.pipe';
 import { AuthenticatedGuard } from '../auth/guards/auth.authenticated.guard';
-import { LocalAuthGuard } from '../auth/guards/auth.localAuth.guard';
 
 import { TAG, OPERATION, RESPONSE } from './defines/users.swagger';
 

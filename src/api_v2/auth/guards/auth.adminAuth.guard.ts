@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { BadRequestError } from 'src/utils/customException';
 
 @Injectable()
-export class LocalAuthGuard extends AuthGuard('local') {
+export class AdminAuthGuard extends AuthGuard('local') {
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
     const response = context.switchToHttp().getResponse();
