@@ -17,6 +17,7 @@ import { TAG, OPERATION, RESPONSE } from './defines/auth.swagger';
 import { SmsCodePipe } from './pipes/auth.smsCodePipe';
 import { AdminAuthGuard } from './guards/auth.adminAuth.guard';
 import { AuthenticatedGuard } from './guards/auth.authenticated.guard';
+import { AppAuthGuard } from './guards/auth.appAuth.guard';
 
 @ApiTags(TAG)
 @Controller('api/auth')
@@ -49,6 +50,12 @@ export class AuthController {
     const isSuccess = !res.locals.isFailLogin;
     const message = res.locals.failMessage;
     return res.json({ isSuccess, message });
+  }
+
+  @UseGuards(AppAuthGuard)
+  @Post('login/app')
+  async loginApp() {
+    return { isSuccess: true };
   }
 
   @UseGuards(AuthenticatedGuard)
